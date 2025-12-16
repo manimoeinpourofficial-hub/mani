@@ -1,0 +1,181 @@
+/* FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Poppins:wght@300;400;500&display=swap');
+
+body {
+    background: #000;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    margin: 0;
+}
+
+/* SECTION */
+.section {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* BACKGROUND */
+#bg {
+    position: absolute;
+    width: 130%;
+    height: 130%;
+    background: url('bg.jpg') center/cover;
+    filter: brightness(0.35);
+    z-index: -1;
+    transition: transform 0.1s linear;
+}
+
+/* PROFILE IMAGE */
+.profile-img {
+    width: 260px;
+    height: auto;
+    border-radius: 12px;
+    object-fit: cover;
+    margin-bottom: 20px;
+    transition: 0.3s ease;
+}
+
+/* INFO BOX */
+.info-box {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 14px;
+    backdrop-filter: blur(8px);
+    max-width: 80%;
+}
+
+/* ICON */
+.info-icon {
+    font-size: 2rem;
+    opacity: 0.9;
+}
+
+/* TEXT */
+.info-text h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.12em;
+    margin-bottom: 6px;
+}
+
+.info-text p {
+    font-size: 0.95rem;
+    opacity: 0.85;
+    line-height: 1.5;
+}
+
+/* WORKS SECTION */
+.works-container {
+    width: 80%;
+    max-width: 900px;
+    text-align: center;
+}
+
+.works-container h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 28px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.works-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.work-card {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    padding: 18px 20px;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(8px);
+    transition: 0.25s ease;
+    cursor: pointer;
+}
+
+.work-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255,255,255,0.12);
+}
+
+.work-card h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    margin-bottom: 6px;
+    letter-spacing: 0.08em;
+}
+
+.work-card p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* BUTTON */
+.view-more-btn {
+    padding: 10px 24px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: transparent;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.view-more-btn:hover {
+    background: rgba(255,255,255,0.08);
+    box-shadow: 0 0 18px rgba(255,255,255,0.15);
+    transform: translateY(-2px);
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+
+    .profile-img {
+        width: 180px;
+        margin-bottom: 16px;
+    }
+
+    .info-box {
+        flex-direction: column;
+        text-align: center;
+        padding: 16px 18px;
+    }
+
+    .info-icon {
+        font-size: 1.8rem;
+    }
+
+    .info-text h1 {
+        font-size: 1.4rem;
+    }
+
+    .info-text p {
+        font-size: 0.85rem;
+    }
+
+    .works-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .work-card {
+        padding: 14px 16px;
+    }
+}
