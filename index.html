@@ -1,51 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anfo — Mani</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anfo — Mani</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-    <section id="anfo-hero">
+  <div id="scroll-wrapper">
 
-        <!-- BACKGROUND -->
-        <div id="bg"></div>
+    <!-- SECTION 1 — HERO -->
+    <section id="anfo-hero" class="panel">
+      <!-- پس‌زمینه با spatial scene -->
+      <div id="bg"></div>
 
-        <!-- LOGO TOP CENTER -->
-        <img src="logo.png" class="anfo-logo" alt="Anfo Logo">
+      <img src="logo.png" class="anfo-logo" alt="Anfo" />
 
-        <!-- PORTRAIT -->
-        <img src="mani-portrait.png" class="mani-img" alt="Mani">
+      <!-- دکمه فعال‌سازی Motion روی موبایل/دسکتاپ -->
+      <button id="motionToggle" class="motion-btn">
+        ENABLE MOTION
+      </button>
 
-        <!-- TEXT -->
-        <div class="hero-text">
+      <div class="hero-content">
+        <div class="left-side">
+          <img src="mani-portrait.png" class="mani-img" alt="Mani" />
+        </div>
+
+        <div class="right-side">
+          <div class="hero-text">
             <h1 class="text-left">hi im mani</h1>
             <p class="text-right">I make your dreams</p>
-        </div>
+          </div>
 
-        <!-- ICONS -->
-        <div class="hero-icons">
+          <div class="hero-icons">
             <div class="icon-box icon-left">
-                <img src="program.png" class="icon-img">
-                <span>program</span>
+              <img src="program.png" class="icon-img" alt="program" />
+              <span>program</span>
             </div>
-
             <div class="icon-box icon-right">
-                <img src="rap.png" class="icon-img">
-                <span>rap</span>
+              <img src="rap.png" class="icon-img" alt="rap" />
+              <span>rap</span>
             </div>
+          </div>
         </div>
+      </div>
 
-        <!-- ARROW -->
-        <img src="arrow.png" class="arrow">
-
-        <!-- SOUND EFFECT -->
-        <audio id="textSound" src="sound.mp3"></audio>
-
+      <img src="arrow.png" class="arrow" alt="scroll down" />
+      <audio id="textSound" src="sound.mp3"></audio>
     </section>
 
-<script src="script.js"></script>
+    <!-- SECTION 2 — PORTFOLIO -->
+    <section id="portfolio" class="panel">
+      <h2 class="portfolio-title fade-in">Selected Works</h2>
+
+      <div class="portfolio-grid">
+        <a href="https://example.com/project1" class="work-card fade-up delay0">
+          <div class="work-img-wrap">
+            <img src="work1.jpg" class="work-img" alt="Project 1" />
+          </div>
+          <h3>Project 01</h3>
+          <p>Cinematic educational platformer.</p>
+        </a>
+
+        <a href="https://example.com/project2" class="work-card fade-up delay1">
+          <div class="work-img-wrap">
+            <img src="work2.jpg" class="work-img" alt="Project 2" />
+          </div>
+          <h3>Project 02</h3>
+          <p>Interactive landing page.</p>
+        </a>
+
+        <a href="https://example.com/project3" class="work-card fade-up delay2">
+          <div class="work-img-wrap">
+            <img src="work3.jpg" class="work-img" alt="Project 3" />
+          </div>
+          <h3>Project 03</h3>
+          <p>Brand website with motion.</p>
+        </a>
+
+        <a href="https://example.com/project4" class="work-card fade-up delay3">
+          <div class="work-img-wrap">
+            <img src="work4.jpg" class="work-img" alt="Project 4" />
+          </div>
+          <h3>Project 04</h3>
+          <p>Anfo universe prototype.</p>
+        </a>
+      </div>
+
+      <button class="view-more neon-btn">VIEW MORE</button>
+    </section>
+
+    <!-- SECTION 3 — MY GAME -->
+    <section id="mygame" class="panel">
+      <h2 class="game-title fade-in">my game</h2>
+
+      <div class="game-center fade-up delay1">
+        <p class="say-text">say <strong>(show me)</strong></p>
+
+        <button id="voiceBtn" class="voice-btn neon-btn">
+          Start Voice Recognition
+        </button>
+
+        <div id="gameList" class="game-list hidden">
+          <p>🎮 Game 1 — Coming Soon</p>
+          <p>🎮 Game 2 — Coming Soon</p>
+          <p>🎮 Game 3 — Coming Soon</p>
+        </div>
+
+        <p id="voiceStatus" class="voice-status"></p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
