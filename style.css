@@ -12,10 +12,12 @@ html, body {
   font-family: 'Poppins', sans-serif;
 }
 
+/* Desktop scroll lock */
 body.desktop-locked {
   overflow: hidden;
 }
 
+/* Mobile free scroll */
 body.mobile-free {
   overflow-x: hidden;
   overflow-y: auto;
@@ -25,6 +27,7 @@ body.mobile-free {
   width: 100%;
 }
 
+/* Base panel */
 .panel {
   height: 100vh;
   width: 100%;
@@ -39,7 +42,6 @@ body.mobile-free {
   }
   .panel {
     scroll-snap-align: start;
-    /* مهم: سکشن‌ها روی موبایل ارتفاع آزاد داشته باشن */
     height: auto;
     min-height: 100vh;
     overflow: visible;
@@ -49,11 +51,11 @@ body.mobile-free {
 /* ========= SECTION 1 — HERO ========= */
 
 #anfo-hero {
-  overflow: hidden;
   position: relative;
+  overflow: hidden;
 }
 
-/* بکگراند با زوم ۲۰٪ و Motion */
+/* Background */
 #bg {
   position: absolute;
   inset: -20%;
@@ -64,7 +66,7 @@ body.mobile-free {
   transition: transform 0.1s linear;
 }
 
-/* لوگو A با افکت */
+/* Logo A */
 .hero-logo-wrapper {
   position: absolute;
   top: 18px;
@@ -79,10 +81,8 @@ body.mobile-free {
 
 .hero-logo {
   width: 90px;
-  height: auto;
-  position: relative;
-  z-index: 2;
   animation: logoPulse 3s ease-in-out infinite;
+  z-index: 2;
 }
 
 .hero-logo-glow {
@@ -91,13 +91,13 @@ body.mobile-free {
   height: 140px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(0,255,204,0.55), transparent 65%);
-  filter: blur(8px);
+  filter: blur(10px);
   opacity: 0.85;
-  z-index: 1;
   animation: logoGlow 3s ease-in-out infinite;
+  z-index: 1;
 }
 
-/* دکمه Motion */
+/* Motion button */
 .motion-btn {
   position: absolute;
   bottom: 22px;
@@ -119,10 +119,9 @@ body.mobile-free {
 .motion-btn.active {
   border-color: #00ffcc;
   box-shadow: 0 0 14px rgba(0,255,204,0.6);
-  background: rgba(0,0,0,0.8);
 }
 
-/* ساختار Hero */
+/* Hero layout */
 .hero-content {
   display: flex;
   height: 100%;
@@ -132,17 +131,7 @@ body.mobile-free {
   padding: 0 40px;
 }
 
-.left-side,
-.right-side {
-  display: flex;
-}
-
-.left-side {
-  justify-content: center;
-  align-items: center;
-}
-
-/* پرتره با افکت زنده—بدون قاب مستطیلی */
+/* Portrait */
 .portrait-wrapper {
   position: relative;
   animation: floatUpDown 4s ease-in-out infinite;
@@ -150,9 +139,8 @@ body.mobile-free {
 
 .mani-img {
   width: 320px;
-  position: relative;
-  z-index: 2;
   display: block;
+  z-index: 2;
 }
 
 .portrait-glow {
@@ -163,16 +151,11 @@ body.mobile-free {
   bottom: -8%;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(0,255,204,0.25), transparent 70%);
-  filter: blur(10px);
+  filter: blur(12px);
   z-index: 1;
 }
 
-/* متن کدگونه */
-.right-side {
-  flex-direction: column;
-  align-items: flex-start;
-}
-
+/* Code text */
 .code-block {
   font-family: 'Source Code Pro', monospace;
   font-size: 1rem;
@@ -182,61 +165,26 @@ body.mobile-free {
   border: 1px solid rgba(0,255,204,0.25);
   box-shadow: 0 0 22px rgba(0,0,0,0.7);
   margin-bottom: 26px;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 1.3s ease forwards;
-  animation-delay: 0.2s;
 }
 
-.code-line {
-  margin: 2px 0;
-  white-space: nowrap;
-}
-
+.code-line { white-space: nowrap; }
 .code-prefix { color: #ff9b61; }
-.code-var    { color: #61dafb; }
-.code-op     { color: #ffffff; }
-.code-str    { color: #98c379; }
-.code-fn     { color: #c678dd; }
+.code-var { color: #61dafb; }
+.code-op { color: #fff; }
+.code-str { color: #98c379; }
+.code-fn { color: #c678dd; }
+.indent { padding-left: 16px; }
 
-.code-line.indent {
-  padding-left: 16px;
-}
-
-/* آیکن‌ها */
+/* Icons */
 .hero-icons {
   display: flex;
   gap: 40px;
   margin-top: 18px;
 }
 
-.icon-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  opacity: 0;
-}
-
 .icon-img {
   width: 80px;
-  transition: transform 0.2s ease, filter 0.2s ease;
-}
-
-.icon-box span {
-  margin-top: 8px;
-  font-size: 0.9rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.icon-left {
-  animation: slideLeft 1.1s ease forwards;
-  animation-delay: 0.7s;
-}
-.icon-right {
-  animation: slideRight 1.1s ease forwards;
-  animation-delay: 0.9s;
+  transition: 0.2s ease;
 }
 
 .icon-box:hover .icon-img {
@@ -244,7 +192,7 @@ body.mobile-free {
   filter: drop-shadow(0 0 10px rgba(0,255,204,0.6));
 }
 
-/* فلش پایین */
+/* Arrow */
 .arrow {
   width: 40px;
   position: absolute;
@@ -262,17 +210,12 @@ body.mobile-free {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0;
 }
 
 .portfolio-title {
   font-family: 'Orbitron', sans-serif;
   font-size: 2.2rem;
-  letter-spacing: 0.12em;
   margin-bottom: 26px;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 1s ease forwards;
 }
 
 .portfolio-grid {
@@ -289,16 +232,12 @@ body.mobile-free {
   border-radius: 14px;
   padding: 10px;
   text-align: center;
-  text-decoration: none;
   color: #fff;
-  backdrop-filter: blur(10px);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
   height: 220px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  opacity: 0;
-  transform: translateY(40px);
+  transition: 0.25s ease;
 }
 
 .work-card:hover {
@@ -320,23 +259,12 @@ body.mobile-free {
   object-fit: cover;
 }
 
-.work-card h3 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.9rem;
-  margin: 4px 0 2px;
-}
-
-.work-card p {
-  font-size: 0.75rem;
-  opacity: 0.85;
-}
-
-/* دکمه نئونی */
+/* Neon button */
 .neon-btn {
   padding: 10px 28px;
   border-radius: 999px;
   border: 1px solid rgba(0,255,204,0.7);
-  background: radial-gradient(circle at 0% 0%, rgba(0,255,204,0.18), transparent);
+  background: radial-gradient(circle, rgba(0,255,204,0.18), transparent);
   color: #fff;
   font-family: 'Orbitron', sans-serif;
   font-size: 0.75rem;
@@ -349,82 +277,60 @@ body.mobile-free {
 }
 
 .neon-btn:hover {
-  background: radial-gradient(circle at 50% 0%, rgba(0,255,204,0.35), transparent);
   box-shadow: 0 0 30px rgba(0,255,204,0.65);
-  transform: translateY(-2px);
 }
 
 /* ========= SECTION 3 — MY GAME ========= */
 
 #mygame {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  position: relative;
   padding: 40px;
+}
+
+/* Background for section 3 */
+#bg3 {
+  position: absolute;
+  inset: 0;
+  background: url('bg1.jpg') center/cover no-repeat;
+  opacity: 0.25;
+  z-index: -1;
 }
 
 .game-title {
   font-family: 'Orbitron', sans-serif;
   font-size: 2.2rem;
   margin-bottom: 20px;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 1s ease forwards;
 }
 
 .game-center {
   text-align: center;
-  opacity: 0;
-  transform: translateY(40px);
-  animation: fadeInUp 1.1s ease forwards;
-  animation-delay: 0.2s;
 }
 
-.voice-status {
-  font-size: 0.8rem;
-  opacity: 0.8;
-}
-
-/* دکمه unlock */
-.play-unlock-btn {
-  margin-bottom: 18px;
-}
-
-/* بازی Drag-to-Unlock */
-.drag-game {
-  margin-bottom: 18px;
-}
-
-.drag-instruction {
-  font-size: 0.9rem;
-  opacity: 0.9;
-  margin-bottom: 10px;
-}
+/* Drag game */
+.drag-game { margin-top: 20px; }
 
 .drag-area {
   display: flex;
-  align-items: center;
   justify-content: center;
   gap: 30px;
+  margin-top: 20px;
 }
 
 .drag-logo-wrapper {
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(0,255,204,0.2), transparent 70%);
+  background: radial-gradient(circle, rgba(0,255,204,0.2), transparent);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: grab;
-  touch-action: none; /* برای درگ روی موبایل */
+  touch-action: none;
   position: relative;
 }
 
 .drag-logo {
   width: 48px;
-  height: auto;
 }
 
 .drop-target {
@@ -437,91 +343,52 @@ body.mobile-free {
   justify-content: center;
   font-family: 'Orbitron', sans-serif;
   font-size: 0.7rem;
-  letter-spacing: 0.16em;
   color: rgba(255,255,255,0.8);
-  text-transform: uppercase;
   transition: 0.2s ease;
-  position: relative;
 }
 
 .drop-target.active {
   border-style: solid;
-  box-shadow: 0 0 24px rgba(0,255,204,0.8);
   background: rgba(0,255,204,0.12);
+  box-shadow: 0 0 24px rgba(0,255,204,0.8);
 }
 
-.game-list {
-  margin-bottom: 12px;
-}
-
-.game-list p {
-  margin: 6px 0;
-  font-size: 1rem;
-}
-
-.hidden {
-  display: none;
-}
+.hidden { display: none; }
 
 /* ========= ANIMATIONS ========= */
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideLeft {
-  from { opacity: 0; transform: translateX(-60px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes slideRight {
-  from { opacity: 0; transform: translateX(60px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
 @keyframes arrowFloat {
-  0%   { transform: translate(-50%, 0); }
-  50%  { transform: translate(-50%, 10px); }
+  0% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, 10px); }
   100% { transform: translate(-50%, 0); }
 }
 
 @keyframes floatUpDown {
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-8px); }
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
   100% { transform: translateY(0); }
 }
 
 @keyframes logoPulse {
-  0%   { transform: scale(1); }
-  50%  { transform: scale(1.06); }
+  0% { transform: scale(1); }
+  50% { transform: scale(1.06); }
   100% { transform: scale(1); }
 }
 
 @keyframes logoGlow {
-  0%   { opacity: 0.7; }
-  50%  { opacity: 1; }
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
   100% { opacity: 0.7; }
 }
-
-/* تأخیرهای انیمیشن کارت‌ها */
-.delay0 { animation-delay: 0.15s; }
-.delay1 { animation-delay: 0.25s; }
-.delay2 { animation-delay: 0.35s; }
-.delay3 { animation-delay: 0.45s; }
 
 /* ========= RESPONSIVE ========= */
 
 @media (max-width: 900px) {
+
   .hero-content {
     flex-direction: column;
     gap: 24px;
-    text-align: center;
     padding: 80px 16px 40px;
-  }
-
-  .right-side {
-    align-items: center;
   }
 
   .mani-img {
@@ -533,14 +400,9 @@ body.mobile-free {
     max-width: 90vw;
   }
 
-  .icon-img {
-    width: 60px;
-  }
-
   .portfolio-grid {
     grid-template-columns: repeat(2, 1fr);
     width: 90%;
-    max-width: 380px;
     gap: 14px;
   }
 
@@ -550,16 +412,6 @@ body.mobile-free {
 
   .work-img-wrap {
     height: 100px;
-  }
-
-  #portfolio {
-    justify-content: center;
-    padding: 60px 0 40px;
-  }
-
-  .motion-btn {
-    bottom: 80px;
-    right: 16px;
   }
 
   .drag-area {
