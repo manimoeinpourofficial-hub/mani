@@ -90,38 +90,37 @@
       <button class="view-more neon-btn">VIEW MORE</button>
     </section>
 
-    <!-- SECTION 3 — MY GAME -->
-    <section id="mygame" class="panel">
-      <h2 class="game-title fade-in">my game</h2>
+  <!-- SECTION 3 — MY GAME -->
+<section id="mygame" class="panel">
+  <h2 class="game-title fade-in">my game</h2>
 
-      <div class="game-center fade-up delay1">
-        <p class="say-text">say <strong>(show me)</strong></p>
+  <div class="game-center fade-up delay1">
+    <!-- دیگه say show me نداریم -->
 
-        <button id="voiceBtn" class="voice-btn neon-btn">Start Voice Recognition</button>
-        <button id="playUnlockBtn" class="play-unlock-btn neon-btn hidden">Play to Unlock</button>
+    <button id="playUnlockBtn" class="play-unlock-btn neon-btn">
+      Click to unlock
+    </button>
 
-        <div id="dragGame" class="drag-game hidden">
-          <p class="drag-instruction">Drag the Anfo logo into the target</p>
-          <div class="drag-area">
-            <div id="dragLogo" class="drag-logo-wrapper" draggable="true">
-              <img src="anfo-logo.png" class="drag-logo" />
-            </div>
-            <div id="dropTarget" class="drop-target"><span>DROP HERE</span></div>
-          </div>
+    <!-- بازی Drag-to-Unlock -->
+    <div id="dragGame" class="drag-game hidden">
+      <p class="drag-instruction">Drag the Anfo logo into the target</p>
+      <div class="drag-area">
+        <div id="dragLogo" class="drag-logo-wrapper">
+          <img src="anfo-logo.png" class="drag-logo" alt="Anfo Logo" />
         </div>
-
-        <div id="gameList" class="game-list hidden">
-          <p>🎮 Game 1 — Coming Soon</p>
-          <p>🎮 Game 2 — Coming Soon</p>
-          <p>🎮 Game 3 — Coming Soon</p>
+        <div id="dropTarget" class="drop-target">
+          <span>DROP HERE</span>
         </div>
-
-        <p id="voiceStatus" class="voice-status"></p>
       </div>
-    </section>
+    </div>
 
+    <div id="gameList" class="game-list hidden">
+      <p>🎮 Game 1 — Coming Soon</p>
+      <p>🎮 Game 2 — Coming Soon</p>
+      <p>🎮 Game 3 — Coming Soon</p>
+    </div>
+
+    <p id="voiceStatus" class="voice-status"></p>
   </div>
+</section>
 
-  <script src="script.js"></script>
-</body>
-</html>
