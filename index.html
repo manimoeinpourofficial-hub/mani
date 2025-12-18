@@ -14,43 +14,58 @@
     <section id="anfo-hero" class="panel">
       <div id="bg"></div>
 
+      <!-- Logo A -->
       <div class="hero-logo-wrapper">
-        <img src="anfo-logo.png" class="hero-logo" />
+        <img src="anfo-logo.png" class="hero-logo" alt="Anfo logo" />
         <div class="hero-logo-glow"></div>
       </div>
 
+      <!-- Motion toggle -->
       <button id="motionToggle" class="motion-btn">ENABLE MOTION</button>
 
       <div class="hero-content">
         <div class="left-side">
           <div class="portrait-wrapper">
-            <img src="mani.png" class="mani-img" />
+            <img src="mani-portrait.png" class="mani-img" alt="Mani" />
             <div class="portrait-glow"></div>
           </div>
         </div>
 
         <div class="right-side">
           <div class="hero-text code-block">
-            <p class="code-line"><span class="code-prefix">const</span> <span class="code-var">mani</span> = <span class="code-str">"hi im mani"</span>;</p>
-            <p class="code-line"><span class="code-prefix">function</span> <span class="code-fn">makeYourDreams</span>() {</p>
-            <p class="code-line indent"><span class="code-prefix">return</span> <span class="code-str">"I make your dreams"</span>;</p>
-            <p class="code-line">}</p>
+            <p class="code-line">
+              <span class="code-prefix">const</span>
+              <span class="code-var">mani</span>
+              <span class="code-op">=</span>
+              <span class="code-str">"hi im mani"</span>
+              <span class="code-op">;</span>
+            </p>
+            <p class="code-line">
+              <span class="code-prefix">function</span>
+              <span class="code-fn">makeYourDreams</span>() <span class="code-op">{</span>
+            </p>
+            <p class="code-line indent">
+              <span class="code-prefix">return</span>
+              <span class="code-str">"I make your dreams"</span>
+              <span class="code-op">;</span>
+            </p>
+            <p class="code-line"><span class="code-op">}</span></p>
           </div>
 
           <div class="hero-icons">
-            <div class="icon-box icon-left">
-              <img src="program.png" class="icon-img" />
+            <div class="icon-box">
+              <img src="program.png" class="icon-img" alt="program" />
               <span>program</span>
             </div>
-            <div class="icon-box icon-right">
-              <img src="rap.png" class="icon-img" />
+            <div class="icon-box">
+              <img src="rap.png" class="icon-img" alt="rap" />
               <span>rap</span>
             </div>
           </div>
         </div>
       </div>
 
-      <img src="arrow.png" class="arrow" />
+      <img src="arrow.png" class="arrow" alt="scroll down" />
     </section>
 
     <!-- SECTION 2 — PORTFOLIO -->
@@ -59,18 +74,72 @@
 
       <div class="portfolio-grid">
         <a href="#" class="work-card">
-          <div class="work-img-wrap"><img src="work1.jpg" class="work-img" /></div>
-          <h3>Project 01</h3><p>Cinematic educational platformer.</p>
+          <div class="work-img-wrap">
+            <img src="work1.jpg" class="work-img" alt="Project 1" />
+          </div>
+          <h3>Project 01</h3>
+          <p>Cinematic educational platformer.</p>
         </a>
 
         <a href="#" class="work-card">
-          <div class="work-img-wrap"><img src="work2.jpg" class="work-img" /></div>
-          <h3>Project 02</h3><p>Interactive landing page.</p>
+          <div class="work-img-wrap">
+            <img src="work2.jpg" class="work-img" alt="Project 2" />
+          </div>
+          <h3>Project 02</h3>
+          <p>Interactive landing page.</p>
         </a>
 
         <a href="#" class="work-card">
-          <div class="work-img-wrap"><img src="work3.jpg" class="work-img" /></div>
-          <h3>Project 03</h3><p>Brand website with motion.</p>
+          <div class="work-img-wrap">
+            <img src="work3.jpg" class="work-img" alt="Project 3" />
+          </div>
+          <h3>Project 03</h3>
+          <p>Brand website with motion.</p>
         </a>
 
-        <a href="#" class="work-card">—
+        <a href="#" class="work-card">
+          <div class="work-img-wrap">
+            <img src="work4.jpg" class="work-img" alt="Project 4" />
+          </div>
+          <h3>Project 04</h3>
+          <p>Anfo universe prototype.</p>
+        </a>
+      </div>
+
+      <button class="neon-btn">VIEW MORE</button>
+    </section>
+
+    <!-- SECTION 3 — MY GAME -->
+    <section id="mygame" class="panel">
+      <div id="bg3"></div>
+
+      <h2 class="game-title">my game</h2>
+
+      <div class="game-center">
+        <button id="unlockBtn" class="neon-btn">Click to unlock</button>
+
+        <div id="dragGame" class="drag-game hidden">
+          <p class="drag-instruction">Drag the Anfo logo into the target</p>
+          <div class="drag-area">
+            <div id="dragLogo" class="drag-logo-wrapper">
+              <img src="anfo-logo.png" class="drag-logo" alt="Anfo logo" />
+            </div>
+            <div id="dropTarget" class="drop-target">
+              <span>DROP HERE</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="gameList" class="game-list hidden">
+          <p>🎮 Game 1 — Coming Soon</p>
+          <p>🎮 Game 2 — Coming Soon</p>
+          <p>🎮 Game 3 — Coming Soon</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
