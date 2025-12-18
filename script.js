@@ -1,17 +1,22 @@
-// ===== Detect Mobile/Desktop =====
+/* ============================
+   DEVICE DETECTION
+============================ */
 const isMobile = window.innerWidth <= 900;
+
 if (isMobile) {
   document.body.classList.add("mobile-free");
 } else {
   document.body.classList.add("desktop-locked");
 }
 
-// ===== SECTION 1 – Motion Background =====
+/* ============================
+   SECTION 1 — MOTION BACKGROUND
+============================ */
 const bg = document.getElementById("bg");
 const motionBtn = document.getElementById("motionToggle");
 let motionEnabled = false;
 
-// Mouse parallax (Desktop)
+// Desktop mouse motion
 if (!isMobile && bg) {
   document.addEventListener("mousemove", (e) => {
     if (!motionEnabled) return;
@@ -21,11 +26,11 @@ if (!isMobile && bg) {
   });
 }
 
-// Gyro (Mobile) + permission
+// Mobile gyro motion
 function enableMobileMotion() {
   if (!bg) return;
 
-  function attachOrientationListener() {
+  function attachGyro() {
     window.addEventListener("deviceorientation", (event) => {
       if (!motionEnabled) return;
       const x = event.gamma || 0;
@@ -37,57 +42,45 @@ function enableMobileMotion() {
   if (typeof DeviceOrientationEvent !== "undefined" &&
       typeof DeviceOrientationEvent.requestPermission === "function") {
     DeviceOrientationEvent.requestPermission()
-      .then((response) => {
-        if (response === "granted") {
-          attachOrientationListener();
-        }
+      .then((res) => {
+        if (res === "granted") attachGyro();
       })
       .catch(() => {});
   } else {
-    attachOrientationListener();
+    attachGyro();
   }
 }
 
-// Motion button
+// Toggle motion
 if (motionBtn) {
   motionBtn.addEventListener("click", () => {
     motionEnabled = !motionEnabled;
     motionBtn.classList.toggle("active", motionEnabled);
-
-    if (isMobile && motionEnabled) {
-      enableMobileMotion();
-    }
+    if (isMobile && motionEnabled) enableMobileMotion();
   });
 }
 
-// Optional: play text sound
-window.addEventListener("load", () => {
-  const sound = document.getElementById("textSound");
-  if (sound) {
-    setTimeout(() => {
-      sound.play().catch(() => {});
-    }, 400);
-  }
-});
-
-// ===== SECTION 3 – Click to unlock + Drag-to-Unlock =====
-const playUnlockBtn = document.getElementById("playUnlockBtn");
+/* ============================
+   SECTION 3 — CLICK TO UNLOCK + DRAG GAME
+============================ */
+const unlockBtn = document.getElementById("unlockBtn");
 const dragGame = document.getElementById("dragGame");
 const dragLogo = document.getElementById("dragLogo");
 const dropTarget = document.getElementById("dropTarget");
 const gameList = document.getElementById("gameList");
-const voiceStatus = document.getElementById("voiceStatus");
 
-if (playUnlockBtn) {
-  playUnlockBtn.addEventListener("click", () => {
-    playUnlockBtn.classList.add("hidden");
+// Step 1 — Click to unlock
+if (unlockBtn) {
+  unlockBtn.addEventListener("click", () => {
+    unlockBtn.classList.add("hidden");
     dragGame.classList.remove("hidden");
-    if (voiceStatus) voiceStatus.textContent = "Drag the logo into the target.";
   });
 }
 
-// Drag & Drop – Desktop (mouse)
-if (dragLogo && dropTarget && gameList) {
+/* ============================
+   DRAG & DROP — DESKTOP
+============================ */
+if (dragLogo && dropTarget) {
   dragLogo.addEventListener("dragstart", (e) => {
     e.dataTransfer.setData("text/plain", "anfo-logo");
   });
@@ -104,110 +97,108 @@ if (dragLogo && dropTarget && gameList) {
   dropTarget.addEventListener("drop", (e) => {
     e.preventDefault();
     const data = e.dataTransfer.getData("text/plain");
-    if (data === "anfo-logo") {
-      unlockGames();
-    }
+    if (data === "anfo-logo") unlockGames();
   });
+}
 
-  // Drag & Drop – Mobile (touch)
-  let touchDragging = false;
+/* ============================
+   DRAG & DROP — MOBILE (TOUCH)
+============================ */
+let dragging = false;
 
-  dragLogo.addEventListener("touchstart", (e) => {
-    touchDragging = true;
-    dragLogo.style.position = "absolute";
-    dragLogo.style.zIndex = "10";
-  });
+dragLogo.addEventListener("touchstart", (e) => {
+  dragging = true;
+  dragLogo.style.position = "absolute";
+  dragLogo.style.zIndex = "10";
+});
 
-  dragLogo.addEventListener("touchmove", (e) => {
-    if (!touchDragging) return;
-    const touch = e.touches[0];
-    const rect = dragGame.getBoundingClientRect();
-    const x = touch.clientX - rect.left;
-    const y = touch.clientY - rect.top;
+dragLogo.addEventListener("touchmove", (e) => {
+  if (!dragging) return;
 
-    dragLogo.style.left = x - dragLogo.offsetWidth / 2 + "px";
-    dragLogo.style.top  = y - dragLogo.offsetHeight / 2 + "px";
+  const touch = e.touches[0];
+  const parentRect = dragGame.getBoundingClientRect();
 
-    const targetRect = dropTarget.getBoundingClientRect();
-    const logoRect = dragLogo.getBoundingClientRect();
+  const x = touch.clientX - parentRect.left;
+  const y = touch.clientY - parentRect.top;
 
-    const isOver =
-      logoRect.left < targetRect.right &&
-      logoRect.right > targetRect.left &&
-      logoRect.top < targetRect.bottom &&
-      logoRect.bottom > targetRect.top;
+  dragLogo.style.left = x - dragLogo.offsetWidth / 2 + "px";
+  dragLogo.style.top = y - dragLogo.offsetHeight / 2 + "px";
 
-    dropTarget.classList.toggle("active", isOver);
-  });
+  const targetRect = dropTarget.getBoundingClientRect();
+  const logoRect = dragLogo.getBoundingClientRect();
 
-  dragLogo.addEventListener("touchend", () => {
-    if (!touchDragging) return;
-    touchDragging = false;
+  const isOver =
+    logoRect.left < targetRect.right &&
+    logoRect.right > targetRect.left &&
+    logoRect.top < targetRect.bottom &&
+    logoRect.bottom > targetRect.top;
 
-    const targetRect = dropTarget.getBoundingClientRect();
-    const logoRect = dragLogo.getBoundingClientRect();
+  dropTarget.classList.toggle("active", isOver);
+});
 
-    const isOver =
-      logoRect.left < targetRect.right &&
-      logoRect.right > targetRect.left &&
-      logoRect.top < targetRect.bottom &&
-      logoRect.bottom > targetRect.top;
+dragLogo.addEventListener("touchend", () => {
+  if (!dragging) return;
+  dragging = false;
 
-    if (isOver) {
-      unlockGames();
-    } else {
-      // برگردوندن لوگو به جای اولیه
-      dragLogo.style.left = "";
-      dragLogo.style.top = "";
-      dragLogo.style.position = "relative";
-      dropTarget.classList.remove("active");
-    }
-  });
+  const targetRect = dropTarget.getBoundingClientRect();
+  const logoRect = dragLogo.getBoundingClientRect();
 
-  function unlockGames() {
-    dropTarget.classList.add("active");
-    dragGame.classList.add("hidden");
-    gameList.classList.remove("hidden");
+  const isOver =
+    logoRect.left < targetRect.right &&
+    logoRect.right > targetRect.left &&
+    logoRect.top < targetRect.bottom &&
+    logoRect.bottom > targetRect.top;
+
+  if (isOver) {
+    unlockGames();
+  } else {
     dragLogo.style.left = "";
     dragLogo.style.top = "";
     dragLogo.style.position = "relative";
-    if (voiceStatus) voiceStatus.textContent = "Unlocked. These are my games.";
+    dropTarget.classList.remove("active");
   }
+});
+
+/* ============================
+   UNLOCK FUNCTION
+============================ */
+function unlockGames() {
+  dropTarget.classList.add("active");
+  dragGame.classList.add("hidden");
+  gameList.classList.remove("hidden");
+
+  dragLogo.style.left = "";
+  dragLogo.style.top = "";
+  dragLogo.style.position = "relative";
 }
 
-// ===== Scroll Slide (Desktop only) =====
+/* ============================
+   DESKTOP — SCROLL SLIDE
+============================ */
 if (!isMobile) {
   const sections = document.querySelectorAll(".panel");
-  let currentIndex = 0;
-  let isScrolling = false;
+  let index = 0;
+  let locked = false;
 
-  function goToSection(index) {
-    if (index < 0 || index >= sections.length) return;
-    isScrolling = true;
-    currentIndex = index;
-    const target = sections[index];
+  function goTo(i) {
+    if (i < 0 || i >= sections.length) return;
+    locked = true;
+    index = i;
     window.scrollTo({
-      top: target.offsetTop,
+      top: sections[i].offsetTop,
       behavior: "smooth"
     });
-    setTimeout(() => {
-      isScrolling = false;
-    }, 700);
+    setTimeout(() => (locked = false), 700);
   }
 
   window.addEventListener("wheel", (e) => {
-    if (isScrolling) return;
-    if (e.deltaY > 0) {
-      goToSection(currentIndex + 1);
-    } else if (e.deltaY < 0) {
-      goToSection(currentIndex - 1);
-    }
+    if (locked) return;
+    if (e.deltaY > 0) goTo(index + 1);
+    else goTo(index - 1);
   });
 
   const arrow = document.querySelector(".arrow");
   if (arrow) {
-    arrow.addEventListener("click", () => {
-      goToSection(currentIndex + 1);
-    });
+    arrow.addEventListener("click", () => goTo(index + 1));
   }
 }
