@@ -70,8 +70,7 @@ window.addEventListener("load", () => {
   }
 });
 
-// ===== SECTION 3 – Voice + Drag-to-Unlock =====
-const voiceBtn = document.getElementById("voiceBtn");
+// ===== SECTION 3 – Click to unlock + Drag-to-Unlock =====
 const playUnlockBtn = document.getElementById("playUnlockBtn");
 const dragGame = document.getElementById("dragGame");
 const dragLogo = document.getElementById("dragLogo");
@@ -79,50 +78,6 @@ const dropTarget = document.getElementById("dropTarget");
 const gameList = document.getElementById("gameList");
 const voiceStatus = document.getElementById("voiceStatus");
 
-if (voiceBtn) {
-  voiceBtn.addEventListener("click", () => {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      if (voiceStatus) {
-        voiceStatus.textContent = "Voice recognition not supported in this browser.";
-      }
-      return;
-    }
-
-    const rec = new SpeechRecognition();
-    rec.lang = "en-US";
-    rec.interimResults = false;
-    rec.maxAlternatives = 1;
-
-    if (voiceStatus) voiceStatus.textContent = "Listening for 'show me'...";
-
-    rec.start();
-
-    rec.onresult = (e) => {
-      const text = e.results[0][0].transcript.toLowerCase();
-      if (text.includes("show me")) {
-        if (voiceStatus) voiceStatus.textContent = "Nice. Now play to unlock.";
-        playUnlockBtn.classList.remove("hidden");
-      } else {
-        if (voiceStatus) {
-          voiceStatus.textContent = `Heard: "${text}" (try saying "show me")`;
-        }
-      }
-    };
-
-    rec.onerror = () => {
-      if (voiceStatus) voiceStatus.textContent = "There was an error with recognition.";
-    };
-
-    rec.onend = () => {
-      if (voiceStatus && !voiceStatus.textContent) {
-        voiceStatus.textContent = "Stopped listening.";
-      }
-    };
-  });
-}
-
-// بعد از show me → کاربر باید بازی رو انجام بده
 if (playUnlockBtn) {
   playUnlockBtn.addEventListener("click", () => {
     playUnlockBtn.classList.add("hidden");
@@ -131,7 +86,7 @@ if (playUnlockBtn) {
   });
 }
 
-// Drag events
+// Drag & Drop – Desktop (mouse)
 if (dragLogo && dropTarget && gameList) {
   dragLogo.addEventListener("dragstart", (e) => {
     e.dataTransfer.setData("text/plain", "anfo-logo");
@@ -150,12 +105,74 @@ if (dragLogo && dropTarget && gameList) {
     e.preventDefault();
     const data = e.dataTransfer.getData("text/plain");
     if (data === "anfo-logo") {
-      dropTarget.classList.add("active");
-      dragGame.classList.add("hidden");
-      gameList.classList.remove("hidden");
-      if (voiceStatus) voiceStatus.textContent = "Welcome inside. These are my games.";
+      unlockGames();
     }
   });
+
+  // Drag & Drop – Mobile (touch)
+  let touchDragging = false;
+
+  dragLogo.addEventListener("touchstart", (e) => {
+    touchDragging = true;
+    dragLogo.style.position = "absolute";
+    dragLogo.style.zIndex = "10";
+  });
+
+  dragLogo.addEventListener("touchmove", (e) => {
+    if (!touchDragging) return;
+    const touch = e.touches[0];
+    const rect = dragGame.getBoundingClientRect();
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+
+    dragLogo.style.left = x - dragLogo.offsetWidth / 2 + "px";
+    dragLogo.style.top  = y - dragLogo.offsetHeight / 2 + "px";
+
+    const targetRect = dropTarget.getBoundingClientRect();
+    const logoRect = dragLogo.getBoundingClientRect();
+
+    const isOver =
+      logoRect.left < targetRect.right &&
+      logoRect.right > targetRect.left &&
+      logoRect.top < targetRect.bottom &&
+      logoRect.bottom > targetRect.top;
+
+    dropTarget.classList.toggle("active", isOver);
+  });
+
+  dragLogo.addEventListener("touchend", () => {
+    if (!touchDragging) return;
+    touchDragging = false;
+
+    const targetRect = dropTarget.getBoundingClientRect();
+    const logoRect = dragLogo.getBoundingClientRect();
+
+    const isOver =
+      logoRect.left < targetRect.right &&
+      logoRect.right > targetRect.left &&
+      logoRect.top < targetRect.bottom &&
+      logoRect.bottom > targetRect.top;
+
+    if (isOver) {
+      unlockGames();
+    } else {
+      // برگردوندن لوگو به جای اولیه
+      dragLogo.style.left = "";
+      dragLogo.style.top = "";
+      dragLogo.style.position = "relative";
+      dropTarget.classList.remove("active");
+    }
+  });
+
+  function unlockGames() {
+    dropTarget.classList.add("active");
+    dragGame.classList.add("hidden");
+    gameList.classList.remove("hidden");
+    dragLogo.style.left = "";
+    dragLogo.style.top = "";
+    dragLogo.style.position = "relative";
+    if (voiceStatus) voiceStatus.textContent = "Unlocked. These are my games.";
+  }
 }
 
 // ===== Scroll Slide (Desktop only) =====
