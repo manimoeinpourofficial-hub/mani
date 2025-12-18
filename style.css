@@ -39,6 +39,10 @@ body.mobile-free {
   }
   .panel {
     scroll-snap-align: start;
+    /* مهم: سکشن‌ها روی موبایل ارتفاع آزاد داشته باشن */
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
   }
 }
 
@@ -83,12 +87,12 @@ body.mobile-free {
 
 .hero-logo-glow {
   position: absolute;
-  width: 130px;
-  height: 130px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(0,255,204,0.55), transparent 60%);
-  filter: blur(4px);
-  opacity: 0.9;
+  background: radial-gradient(circle, rgba(0,255,204,0.55), transparent 65%);
+  filter: blur(8px);
+  opacity: 0.85;
   z-index: 1;
   animation: logoGlow 3s ease-in-out infinite;
 }
@@ -138,7 +142,7 @@ body.mobile-free {
   align-items: center;
 }
 
-/* پرتره با افکت زنده */
+/* پرتره با افکت زنده—بدون قاب مستطیلی */
 .portrait-wrapper {
   position: relative;
   animation: floatUpDown 4s ease-in-out infinite;
@@ -146,18 +150,20 @@ body.mobile-free {
 
 .mani-img {
   width: 320px;
-  border-radius: 18px;
-  box-shadow: 0 0 40px rgba(0,0,0,0.8);
   position: relative;
   z-index: 2;
+  display: block;
 }
 
 .portrait-glow {
   position: absolute;
-  inset: 8%;
-  border-radius: 18px;
-  background: radial-gradient(circle at 20% 0%, rgba(0,255,204,0.18), transparent 60%);
-  filter: blur(6px);
+  width: 70%;
+  height: 40%;
+  left: 15%;
+  bottom: -8%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,255,204,0.25), transparent 70%);
+  filter: blur(10px);
   z-index: 1;
 }
 
@@ -375,15 +381,12 @@ body.mobile-free {
   animation-delay: 0.2s;
 }
 
-.say-text {
-  font-size: 1.4rem;
-  margin-bottom: 18px;
+.voice-status {
+  font-size: 0.8rem;
+  opacity: 0.8;
 }
 
-.voice-btn {
-  margin-bottom: 14px;
-}
-
+/* دکمه unlock */
 .play-unlock-btn {
   margin-bottom: 18px;
 }
@@ -415,6 +418,8 @@ body.mobile-free {
   align-items: center;
   justify-content: center;
   cursor: grab;
+  touch-action: none; /* برای درگ روی موبایل */
+  position: relative;
 }
 
 .drag-logo {
@@ -436,6 +441,7 @@ body.mobile-free {
   color: rgba(255,255,255,0.8);
   text-transform: uppercase;
   transition: 0.2s ease;
+  position: relative;
 }
 
 .drop-target.active {
@@ -455,11 +461,6 @@ body.mobile-free {
 
 .hidden {
   display: none;
-}
-
-.voice-status {
-  font-size: 0.8rem;
-  opacity: 0.8;
 }
 
 /* ========= ANIMATIONS ========= */
@@ -516,6 +517,7 @@ body.mobile-free {
     flex-direction: column;
     gap: 24px;
     text-align: center;
+    padding: 80px 16px 40px;
   }
 
   .right-side {
@@ -552,6 +554,7 @@ body.mobile-free {
 
   #portfolio {
     justify-content: center;
+    padding: 60px 0 40px;
   }
 
   .motion-btn {
