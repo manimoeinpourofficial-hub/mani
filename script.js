@@ -1,4 +1,4 @@
-// ===== تشخیص موبایل / دسکتاپ =====
+// ===== Detect Mobile/Desktop =====
 const isMobile = window.innerWidth <= 900;
 if (isMobile) {
   document.body.classList.add("mobile-free");
@@ -11,17 +11,17 @@ const bg = document.getElementById("bg");
 const motionBtn = document.getElementById("motionToggle");
 let motionEnabled = false;
 
-// Mouse parallax (دسکتاپ)
+// Mouse parallax (Desktop)
 if (!isMobile && bg) {
   document.addEventListener("mousemove", (e) => {
     if (!motionEnabled) return;
-    const x = (e.clientX / window.innerWidth - 0.5) * 25;
-    const y = (e.clientY / window.innerHeight - 0.5) * 25;
-    bg.style.transform = `translate(${x}px, ${y}px) scale(1.1)`;
+    const x = (e.clientX / window.innerWidth - 0.5) * 30;
+    const y = (e.clientY / window.innerHeight - 0.5) * 30;
+    bg.style.transform = `translate(${x}px, ${y}px) scale(1.2)`;
   });
 }
 
-// Gyro (موبایل) + permission
+// Gyro (Mobile) + permission
 function enableMobileMotion() {
   if (!bg) return;
 
@@ -30,7 +30,7 @@ function enableMobileMotion() {
       if (!motionEnabled) return;
       const x = event.gamma || 0;
       const y = event.beta || 0;
-      bg.style.transform = `translate(${x * 2}px, ${y * 2}px) scale(1.1)`;
+      bg.style.transform = `translate(${x * 2}px, ${y * 2}px) scale(1.2)`;
     });
   }
 
@@ -48,7 +48,7 @@ function enableMobileMotion() {
   }
 }
 
-// دکمه Enable Motion
+// Motion button
 if (motionBtn) {
   motionBtn.addEventListener("click", () => {
     motionEnabled = !motionEnabled;
@@ -60,7 +60,7 @@ if (motionBtn) {
   });
 }
 
-// ===== پخش صدای متن (اختیاری) =====
+// Optional: play text sound
 window.addEventListener("load", () => {
   const sound = document.getElementById("textSound");
   if (sound) {
@@ -70,27 +70,12 @@ window.addEventListener("load", () => {
   }
 });
 
-// ===== انیمیشن ورود روی اسکرول برای سکشن ۲ و ۳ =====
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-      }
-    });
-  },
-  {
-    threshold: 0.3
-  }
-);
-
-// هر المنتی که کلاس fade-in یا fade-up دارد، در ورود فعال می‌شود
-document.querySelectorAll(".fade-in, .fade-up").forEach(el => {
-  observer.observe(el);
-});
-
-// ===== SECTION 3 – Voice Recognition =====
+// ===== SECTION 3 – Voice + Drag-to-Unlock =====
 const voiceBtn = document.getElementById("voiceBtn");
+const playUnlockBtn = document.getElementById("playUnlockBtn");
+const dragGame = document.getElementById("dragGame");
+const dragLogo = document.getElementById("dragLogo");
+const dropTarget = document.getElementById("dropTarget");
 const gameList = document.getElementById("gameList");
 const voiceStatus = document.getElementById("voiceStatus");
 
@@ -116,8 +101,8 @@ if (voiceBtn) {
     rec.onresult = (e) => {
       const text = e.results[0][0].transcript.toLowerCase();
       if (text.includes("show me")) {
-        gameList.classList.remove("hidden");
-        if (voiceStatus) voiceStatus.textContent = "Got it. Showing your games.";
+        if (voiceStatus) voiceStatus.textContent = "Nice. Now play to unlock.";
+        playUnlockBtn.classList.remove("hidden");
       } else {
         if (voiceStatus) {
           voiceStatus.textContent = `Heard: "${text}" (try saying "show me")`;
@@ -130,7 +115,6 @@ if (voiceBtn) {
     };
 
     rec.onend = () => {
-      if (!gameList.classList.contains("hidden")) return;
       if (voiceStatus && !voiceStatus.textContent) {
         voiceStatus.textContent = "Stopped listening.";
       }
@@ -138,7 +122,43 @@ if (voiceBtn) {
   });
 }
 
-// ===== Scroll Slide (فقط دسکتاپ) =====
+// بعد از show me → کاربر باید بازی رو انجام بده
+if (playUnlockBtn) {
+  playUnlockBtn.addEventListener("click", () => {
+    playUnlockBtn.classList.add("hidden");
+    dragGame.classList.remove("hidden");
+    if (voiceStatus) voiceStatus.textContent = "Drag the logo into the target.";
+  });
+}
+
+// Drag events
+if (dragLogo && dropTarget && gameList) {
+  dragLogo.addEventListener("dragstart", (e) => {
+    e.dataTransfer.setData("text/plain", "anfo-logo");
+  });
+
+  dropTarget.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropTarget.classList.add("active");
+  });
+
+  dropTarget.addEventListener("dragleave", () => {
+    dropTarget.classList.remove("active");
+  });
+
+  dropTarget.addEventListener("drop", (e) => {
+    e.preventDefault();
+    const data = e.dataTransfer.getData("text/plain");
+    if (data === "anfo-logo") {
+      dropTarget.classList.add("active");
+      dragGame.classList.add("hidden");
+      gameList.classList.remove("hidden");
+      if (voiceStatus) voiceStatus.textContent = "Welcome inside. These are my games.";
+    }
+  });
+}
+
+// ===== Scroll Slide (Desktop only) =====
 if (!isMobile) {
   const sections = document.querySelectorAll(".panel");
   let currentIndex = 0;
