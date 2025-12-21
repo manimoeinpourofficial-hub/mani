@@ -1,170 +1,232 @@
-// Detect mobile
-const isMobile = window.innerWidth <= 900;
+/* script.js — final tuned version
+   - hero & social sections have no color overlay (handled in CSS)
+   - hover effects applied globally in CSS
+   - runner smaller and jump stronger (tunable JUMP_UP)
+   - chat no longer auto-opens; close works; overlay & Escape close
+   - entrance animations via IntersectionObserver
+*/
 
-/* ========= SECTION 1 — MOTION BACKGROUND ========= */
-const bg = document.getElementById("bg");
-const motionBtn = document.getElementById("motionToggle");
-let motionEnabled = false;
+(() => {
+  'use strict';
 
-// Desktop mouse motion
-if (!isMobile && bg) {
-  document.addEventListener("mousemove", (e) => {
-    if (!motionEnabled) return;
-    const x = (e.clientX / window.innerWidth - 0.5) * 30;
-    const y = (e.clientY / window.innerHeight - 0.5) * 30;
-    bg.style.transform = `translate(${x}px, ${y}px) scale(1.15)`;
+  const doc = document;
+  const win = window;
+
+  /* Cached selectors */
+  const header = doc.getElementById('site-header');
+  const messageBtn = doc.getElementById('messageBtn');
+  const chatPopup = doc.getElementById('chatPopup');
+  const chatClose = doc.getElementById('chatClose');
+  const chatSend = doc.getElementById('chatSend');
+  const chatField = doc.getElementById('chatField');
+  const chatBody = doc.getElementById('chatBody');
+
+  /* Helpers */
+  const addClass = (el, c) => el && el.classList.add(c);
+  const removeClass = (el, c) => el && el.classList.remove(c);
+  const setAttr = (el, k, v) => el && el.setAttribute(k, v);
+
+  /* Sticky header */
+  if (header) {
+    win.addEventListener('scroll', () => {
+      header.classList.toggle('header--shrink', win.scrollY > 20);
+    }, { passive: true });
+  }
+
+  /* Prevent spacebar scroll unless typing */
+  win.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' && !/input|textarea/i.test(document.activeElement.tagName)) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  /* Event delegation for card press feedback */
+  doc.addEventListener('pointerdown', (e) => {
+    const c = e.target.closest && e.target.closest('.work-card');
+    if (c) c.style.transform = 'scale(0.97)';
   });
-}
+  doc.addEventListener('pointerup', (e) => {
+    const c = e.target.closest && e.target.closest('.work-card');
+    if (c) c.style.transform = '';
+  });
 
-// Mobile gyro motion
-function enableMobileMotion() {
-  if (!bg) return;
+  /* IntersectionObserver for entrance animations */
+  (function entranceObserver() {
+    const items = doc.querySelectorAll('.fade-in, .fade-up, .text-left, .text-right, .icon-left, .icon-right, .section-title, .work-card, .track-card, .service-card, .social-card, .mani-img');
+    if (!items.length) return;
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.18 });
+    items.forEach(i => io.observe(i));
+  })();
 
-  function attachGyro() {
-    window.addEventListener("deviceorientation", (event) => {
-      if (!motionEnabled) return;
-      const x = event.gamma || 0;
-      const y = event.beta || 0;
-      bg.style.transform = `translate(${x * 2}px, ${y * 2}px) scale(1.15)`;
+  /* Runner game: smaller runner, stronger jump (tunable) */
+  (function runnerGame() {
+    const runner = doc.getElementById('runner');
+    const obstacle = doc.getElementById('obstacle');
+    const wrap = doc.querySelector('.runner-wrap');
+    const progressBar = doc.getElementById('progressBar');
+    const gameList = doc.getElementById('gameList');
+
+    if (!runner || !obstacle || !wrap || !progressBar) return;
+
+    let jumping = false;
+    let score = 0;
+    let unlocked = false;
+
+    // tuning: stronger jump
+    const JUMP_UP = -140;
+
+    const updateProgress = () => {
+      const pct = Math.max(0, Math.min(100, score));
+      progressBar.style.width = pct + '%';
+      progressBar.setAttribute('aria-valuenow', String(pct));
+    };
+
+    const jump = () => {
+      if (jumping || unlocked) return;
+      jumping = true;
+      runner.style.transition = 'transform .26s cubic-bezier(.2,.9,.2,1)';
+      runner.style.transform = `translateY(${JUMP_UP}px)`;
+      setTimeout(() => {
+        runner.style.transition = 'transform .22s ease-in';
+        runner.style.transform = 'translateY(0)';
+        setTimeout(() => { jumping = false; }, 240);
+      }, 260);
+    };
+
+    // Controls
+    win.addEventListener('keydown', (e) => { if (e.code === 'Space') jump(); }, { passive: true });
+    wrap.addEventListener('click', jump, { passive: true });
+    wrap.addEventListener('touchstart', (e) => { e.preventDefault(); jump(); }, { passive: false });
+
+    // Score increase on obstacle cycle
+    obstacle.addEventListener('animationiteration', () => {
+      if (unlocked) return;
+      score = Math.min(100, score + 10);
+      updateProgress();
+      if (score >= 100) {
+        unlocked = true;
+        gameList.classList.remove('hidden');
+        gameList.setAttribute('aria-hidden', 'false');
+        const cards = gameList.querySelectorAll('.work-card');
+        cards.forEach((c, i) => {
+          c.style.opacity = '0';
+          c.style.transform = 'translateY(20px)';
+          setTimeout(() => {
+            c.style.transition = 'opacity .4s ease, transform .4s ease';
+            c.style.opacity = '1';
+            c.style.transform = 'translateY(0)';
+          }, 120 * i);
+        });
+      }
     });
+
+    // Collision detection via RAF
+    let rafId = null;
+    const checkCollision = () => {
+      if (unlocked) {
+        if (rafId) cancelAnimationFrame(rafId);
+        return;
+      }
+      const r = runner.getBoundingClientRect();
+      const o = obstacle.getBoundingClientRect();
+      const hit = !(r.right < o.left || r.left > o.right || r.bottom < o.top || r.top > o.bottom);
+      if (hit) {
+        score = 0;
+        updateProgress();
+        wrap.style.transition = 'filter .15s ease';
+        wrap.style.filter = 'contrast(1.4)';
+        runner.style.transition = 'transform .12s ease';
+        runner.style.transform = 'translateY(-6px)';
+        setTimeout(() => {
+          wrap.style.filter = 'contrast(1)';
+          runner.style.transform = 'translateY(0)';
+        }, 180);
+      }
+      rafId = requestAnimationFrame(checkCollision);
+    };
+    rafId = requestAnimationFrame(checkCollision);
+  })();
+
+  /* Chat popup logic (fixed auto-open & close) */
+  (function chatLogic() {
+    if (!messageBtn || !chatPopup) return;
+
+    // ensure hidden on load
+    removeClass(chatPopup, 'visible');
+    addClass(chatPopup, 'hidden');
+    setAttr(messageBtn, 'aria-expanded', 'false');
+
+    const openChat = () => {
+      removeClass(chatPopup, 'hidden');
+      addClass(chatPopup, 'visible');
+      setAttr(messageBtn, 'aria-expanded', 'true');
+      setTimeout(() => chatField && chatField.focus(), 120);
+    };
+
+    const closeChat = () => {
+      addClass(chatPopup, 'hidden');
+      removeClass(chatPopup, 'visible');
+      setAttr(messageBtn, 'aria-expanded', 'false');
+      messageBtn.focus();
+    };
+
+    messageBtn.addEventListener('click', openChat, { passive: true });
+    chatClose && chatClose.addEventListener('click', closeChat, { passive: true });
+
+    // click outside to close
+    chatPopup.addEventListener('click', (e) => {
+      if (e.target === chatPopup) closeChat();
+    }, { passive: true });
+
+    // Escape to close
+    win.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !chatPopup.classList.contains('hidden')) closeChat();
+    }, { passive: true });
+
+    // send message
+    const appendUser = (text) => {
+      const d = doc.createElement('div');
+      d.className = 'chat-msg chat-msg--user';
+      d.textContent = text;
+      chatBody.appendChild(d);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    };
+    const appendBot = (text) => {
+      const d = doc.createElement('div');
+      d.className = 'chat-msg chat-msg--bot';
+      d.textContent = text;
+      chatBody.appendChild(d);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    };
+
+    if (chatSend && chatField) {
+      chatSend.addEventListener('click', () => {
+        const text = chatField.value.trim();
+        if (!text) return;
+        appendUser(text);
+        chatField.value = '';
+        setTimeout(() => appendBot("Got it — I'll get back to you soon."), 450);
+      }, { passive: true });
+
+      chatField.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          chatSend.click();
+        }
+      });
+    }
+  })();
+
+  /* prefers-reduced-motion */
+  if (win.matchMedia && win.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    doc.documentElement.classList.add('reduce-motion');
   }
 
-  if (typeof DeviceOrientationEvent !== "undefined" &&
-      typeof DeviceOrientationEvent.requestPermission === "function") {
-    DeviceOrientationEvent.requestPermission()
-      .then((res) => {
-        if (res === "granted") attachGyro();
-      })
-      .catch(() => {});
-  } else {
-    attachGyro();
-  }
-}
-
-// Toggle motion
-if (motionBtn) {
-  motionBtn.addEventListener("click", () => {
-    motionEnabled = !motionEnabled;
-    motionBtn.classList.toggle("active", motionEnabled);
-    if (isMobile && motionEnabled) enableMobileMotion();
-  });
-}
-
-/* ========= Arrow scroll to next section ========= */
-const arrow = document.querySelector(".arrow");
-if (arrow) {
-  arrow.addEventListener("click", () => {
-    const sections = document.querySelectorAll(".panel");
-    if (sections.length > 1) {
-      const nextTop = sections[1].offsetTop;
-      window.scrollTo({ top: nextTop, behavior: "smooth" });
-    }
-  });
-}
-
-/* ========= SECTION 3 — CLICK TO UNLOCK + DRAG GAME ========= */
-const unlockBtn   = document.getElementById("unlockBtn");
-const dragGame    = document.getElementById("dragGame");
-const dragLogo    = document.getElementById("dragLogo");
-const dropTarget  = document.getElementById("dropTarget");
-const gameList    = document.getElementById("gameList");
-
-if (unlockBtn && dragGame && dragLogo && dropTarget && gameList) {
-  // مرحله ۱: کلیک برای شروع بازی
-  unlockBtn.addEventListener("click", () => {
-    unlockBtn.classList.add("hidden");
-    dragGame.classList.remove("hidden");
-  });
-
-  // Desktop Drag & Drop (HTML5 drag)
-  dragLogo.addEventListener("dragstart", (e) => {
-    e.dataTransfer.setData("text/plain", "anfo-logo");
-  });
-
-  dropTarget.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    dropTarget.classList.add("active");
-  });
-
-  dropTarget.addEventListener("dragleave", () => {
-    dropTarget.classList.remove("active");
-  });
-
-  dropTarget.addEventListener("drop", (e) => {
-    e.preventDefault();
-    const data = e.dataTransfer.getData("text/plain");
-    if (data === "anfo-logo") {
-      unlockGames();
-    } else {
-      dropTarget.classList.remove("active");
-    }
-  });
-
-  // Pointer-based drag (کار می‌کند روی موبایل و دسکتاپ مدرن)
-  let pointerDown = false;
-
-  dragLogo.addEventListener("pointerdown", (e) => {
-    pointerDown = true;
-    dragLogo.setPointerCapture(e.pointerId);
-    dragLogo.style.position = "absolute";
-    dragLogo.style.zIndex = "10";
-  });
-
-  dragLogo.addEventListener("pointermove", (e) => {
-    if (!pointerDown) return;
-
-    const parentRect = dragGame.getBoundingClientRect();
-    const x = e.clientX - parentRect.left;
-    const y = e.clientY - parentRect.top;
-
-    dragLogo.style.left = (x - dragLogo.offsetWidth / 2) + "px";
-    dragLogo.style.top  = (y - dragLogo.offsetHeight / 2) + "px";
-
-    const targetRect = dropTarget.getBoundingClientRect();
-    const logoRect   = dragLogo.getBoundingClientRect();
-
-    const isOver =
-      logoRect.left < targetRect.right &&
-      logoRect.right > targetRect.left &&
-      logoRect.top < targetRect.bottom &&
-      logoRect.bottom > targetRect.top;
-
-    dropTarget.classList.toggle("active", isOver);
-  });
-
-  dragLogo.addEventListener("pointerup", () => {
-    if (!pointerDown) return;
-    pointerDown = false;
-
-    const targetRect = dropTarget.getBoundingClientRect();
-    const logoRect   = dragLogo.getBoundingClientRect();
-
-    const isOver =
-      logoRect.left < targetRect.right &&
-      logoRect.right > targetRect.left &&
-      logoRect.top < targetRect.bottom &&
-      logoRect.bottom > targetRect.top;
-
-    if (isOver) {
-      unlockGames();
-    } else {
-      // reset position
-      dragLogo.style.left = "";
-      dragLogo.style.top = "";
-      dragLogo.style.position = "relative";
-      dragLogo.style.zIndex = "";
-      dropTarget.classList.remove("active");
-    }
-  });
-
-  function unlockGames() {
-    dropTarget.classList.add("active");
-    dragGame.classList.add("hidden");
-    gameList.classList.remove("hidden");
-
-    dragLogo.style.left = "";
-    dragLogo.style.top = "";
-    dragLogo.style.position = "relative";
-    dragLogo.style.zIndex = "";
-  }
-}
+})();
