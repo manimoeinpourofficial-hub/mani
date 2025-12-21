@@ -1,145 +1,265 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Anfo — Mani</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Main stylesheet -->
   <link rel="stylesheet" href="style.css" />
+
+  <meta name="color-scheme" content="dark">
 </head>
 <body>
 
-  <div id="scroll-wrapper">
+  <!-- Header -->
+  <header id="site-header" class="header" role="banner" aria-label="site header">
+    <img src="logo.png" class="header-logo" alt="Anfo logo" loading="lazy" width="96" height="96" />
+  </header>
 
-    <!-- SECTION 1 — HERO -->
+  <main id="scroll-wrapper" role="main">
+
+    <!-- HERO (pure image background, no color overlay) -->
     <section id="anfo-hero" class="panel">
-      <div id="bg"></div>
+      <div id="bg-hero" class="section-bg" aria-hidden="true"></div>
 
-      <!-- Logo A -->
-      <div class="hero-logo-wrapper">
-        <img src="anfo-logo.png" class="hero-logo" alt="Anfo logo" />
-        <div class="hero-logo-glow"></div>
-      </div>
-
-      <!-- Motion toggle -->
-      <button id="motionToggle" class="motion-btn">ENABLE MOTION</button>
-
-      <div class="hero-content">
+      <div class="hero-content container">
         <div class="left-side">
-          <div class="portrait-wrapper">
-            <img src="mani-portrait.png" class="mani-img" alt="Mani" />
-            <div class="portrait-glow"></div>
-          </div>
+          <img src="mani-portrait.png" class="mani-img" alt="Mani portrait" loading="lazy" width="320" height="320" />
         </div>
 
         <div class="right-side">
-          <div class="hero-text code-block">
-            <p class="code-line">
-              <span class="code-prefix">const</span>
-              <span class="code-var">mani</span>
-              <span class="code-op">=</span>
-              <span class="code-str">"hi im mani"</span>
-              <span class="code-op">;</span>
-            </p>
-            <p class="code-line">
-              <span class="code-prefix">function</span>
-              <span class="code-fn">makeYourDreams</span>() <span class="code-op">{</span>
-            </p>
-            <p class="code-line indent">
-              <span class="code-prefix">return</span>
-              <span class="code-str">"I make your dreams"</span>
-              <span class="code-op">;</span>
-            </p>
-            <p class="code-line"><span class="code-op">}</span></p>
+          <div class="hero-text">
+            <h1 class="text-left fade-in">hi im mani</h1>
+            <p class="text-right fade-in delay1">I make your dreams</p>
           </div>
 
           <div class="hero-icons">
-            <div class="icon-box">
-              <img src="program.png" class="icon-img" alt="program" />
+            <button class="icon-box icon-left" type="button" aria-label="program">
+              <img src="program.png" class="icon-img" alt="" loading="lazy" width="72" height="72" />
               <span>program</span>
-            </div>
-            <div class="icon-box">
-              <img src="rap.png" class="icon-img" alt="rap" />
+            </button>
+            <button class="icon-box icon-right" type="button" aria-label="rap">
+              <img src="rap.png" class="icon-img" alt="" loading="lazy" width="72" height="72" />
               <span>rap</span>
-            </div>
+            </button>
           </div>
         </div>
       </div>
 
-      <img src="arrow.png" class="arrow" alt="scroll down" />
+      <img src="arrow.png" class="arrow" alt="scroll down" loading="lazy" width="40" height="40" />
     </section>
 
-    <!-- SECTION 2 — PORTFOLIO -->
+    <!-- PORTFOLIO -->
     <section id="portfolio" class="panel">
-      <h2 class="portfolio-title">Selected Works</h2>
+      <h2 class="section-title fade-in">Selected Works</h2>
 
       <div class="portfolio-grid">
-        <a href="#" class="work-card">
+        <a href="https://example.com/project1" class="work-card fade-up delay0" rel="noopener">
           <div class="work-img-wrap">
-            <img src="work1.jpg" class="work-img" alt="Project 1" />
+            <img src="work1.jpg" class="work-img" alt="Project 1" loading="lazy" />
           </div>
           <h3>Project 01</h3>
           <p>Cinematic educational platformer.</p>
         </a>
 
-        <a href="#" class="work-card">
+        <a href="https://example.com/project2" class="work-card fade-up delay1" rel="noopener">
           <div class="work-img-wrap">
-            <img src="work2.jpg" class="work-img" alt="Project 2" />
+            <img src="work2.jpg" class="work-img" alt="Project 2" loading="lazy" />
           </div>
           <h3>Project 02</h3>
           <p>Interactive landing page.</p>
         </a>
 
-        <a href="#" class="work-card">
+        <a href="https://example.com/project3" class="work-card fade-up delay2" rel="noopener">
           <div class="work-img-wrap">
-            <img src="work3.jpg" class="work-img" alt="Project 3" />
+            <img src="work3.jpg" class="work-img" alt="Project 3" loading="lazy" />
           </div>
           <h3>Project 03</h3>
           <p>Brand website with motion.</p>
         </a>
 
-        <a href="#" class="work-card">
+        <a href="https://example.com/project4" class="work-card fade-up delay3" rel="noopener">
           <div class="work-img-wrap">
-            <img src="work4.jpg" class="work-img" alt="Project 4" />
+            <img src="work4.jpg" class="work-img" alt="Project 4" loading="lazy" />
           </div>
           <h3>Project 04</h3>
           <p>Anfo universe prototype.</p>
         </a>
       </div>
 
-      <button class="neon-btn">VIEW MORE</button>
+      <button class="view-more neon-btn" type="button" aria-label="View more projects">VIEW MORE</button>
     </section>
 
-    <!-- SECTION 3 — MY GAME -->
+    <!-- MINI GAME -->
     <section id="mygame" class="panel">
-      <div id="bg3"></div>
+      <h2 class="section-title fade-in">My game</h2>
 
-      <h2 class="game-title">my game</h2>
-
-      <div class="game-center">
-        <button id="unlockBtn" class="neon-btn">Click to unlock</button>
-
-        <div id="dragGame" class="drag-game hidden">
-          <p class="drag-instruction">Drag the Anfo logo into the target</p>
-          <div class="drag-area">
-            <div id="dragLogo" class="drag-logo-wrapper">
-              <img src="anfo-logo.png" class="drag-logo" alt="Anfo logo" />
-            </div>
-            <div id="dropTarget" class="drop-target">
-              <span>DROP HERE</span>
-            </div>
-          </div>
+      <div class="game-center fade-up delay1">
+        <div class="runner-wrap" aria-hidden="false">
+          <div id="runner" class="runner" aria-hidden="true"></div>
+          <div id="obstacle" class="obstacle" aria-hidden="true"></div>
         </div>
 
-        <div id="gameList" class="game-list hidden">
-          <p>🎮 Game 1 — Coming Soon</p>
-          <p>🎮 Game 2 — Coming Soon</p>
-          <p>🎮 Game 3 — Coming Soon</p>
+        <div class="progress-wrap" aria-hidden="false">
+          <div id="progressBar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+        </div>
+
+        <div id="gameList" class="portfolio-grid hidden" aria-hidden="true">
+          <a href="https://example.com/game1" class="work-card" rel="noopener">
+            <div class="work-img-wrap">
+              <img src="game1.jpg" class="work-img" alt="Game 1" loading="lazy" />
+            </div>
+            <h3>Game 01</h3>
+            <p>Coming Soon</p>
+          </a>
+          <a href="https://example.com/game2" class="work-card" rel="noopener">
+            <div class="work-img-wrap">
+              <img src="game2.jpg" class="work-img" alt="Game 2" loading="lazy" />
+            </div>
+            <h3>Game 02</h3>
+            <p>Coming Soon</p>
+          </a>
+          <a href="https://example.com/game3" class="work-card" rel="noopener">
+            <div class="work-img-wrap">
+              <img src="game3.jpg" class="work-img" alt="Game 3" loading="lazy" />
+            </div>
+            <h3>Game 03</h3>
+            <p>Coming Soon</p>
+          </a>
+          <a href="https://example.com/game4" class="work-card" rel="noopener">
+            <div class="work-img-wrap">
+              <img src="game4.jpg" class="work-img" alt="Game 4" loading="lazy" />
+            </div>
+            <h3>Game 04</h3>
+            <p>Coming Soon</p>
+          </a>
         </div>
       </div>
     </section>
 
+    <!-- TRACKS -->
+    <section id="tracks" class="panel">
+      <h2 class="section-title fade-in">My tracks</h2>
+
+      <div class="tracks-grid">
+        <div class="track-card fade-up delay0">
+          <div class="track-cover">
+            <img src="track1.jpg" alt="Track 1" loading="lazy" />
+          </div>
+          <h3>Track 01</h3>
+          <audio controls preload="none" class="track-audio">
+            <source src="track1-demo.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+
+        <div class="track-card fade-up delay1">
+          <div class="track-cover">
+            <img src="track2.jpg" alt="Track 2" loading="lazy" />
+          </div>
+          <h3>Track 02</h3>
+          <audio controls preload="none" class="track-audio">
+            <source src="track2-demo.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+
+        <div class="track-card fade-up delay2">
+          <div class="track-cover">
+            <img src="track3.jpg" alt="Track 3" loading="lazy" />
+          </div>
+          <h3>Track 03</h3>
+          <audio controls preload="none" class="track-audio">
+            <source src="track3-demo.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+
+        <div class="track-card fade-up delay3">
+          <div class="track-cover">
+            <img src="track4.jpg" alt="Track 4" loading="lazy" />
+          </div>
+          <h3>Track 04</h3>
+          <audio controls preload="none" class="track-audio">
+            <source src="track4-demo.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="panel">
+      <h2 class="section-title fade-in">My services</h2>
+
+      <div class="services-grid">
+        <div class="service-card fade-up delay0">
+          <div class="service-icon">💻</div>
+          <h3>Interactive websites</h3>
+          <p>Cinematic UI/UX, motion backgrounds, and branded experiences.</p>
+        </div>
+
+        <div class="service-card fade-up delay1">
+          <div class="service-icon">🎮</div>
+          <h3>Game prototypes</h3>
+          <p>Playable demos with spatial effects and clean mechanics.</p>
+        </div>
+
+        <div class="service-card fade-up delay2">
+          <div class="service-icon">🎤</div>
+          <h3>Rap visuals</h3>
+          <p>Minimal, high-energy visuals that feel alive and intentional.</p>
+        </div>
+
+        <div class="service-card fade-up delay3">
+          <div class="service-icon">🛍️</div>
+          <h3>Brand sites</h3>
+          <p>Maintainable, responsive sites with localization and RTL.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOCIAL (pure image background, no color overlay) -->
+    <section id="social" class="panel">
+      <div id="bg-social" class="section-bg" aria-hidden="true"></div>
+
+      <h2 class="section-title fade-in">Follow me</h2>
+
+      <div class="social-grid">
+        <a class="social-card fade-up delay0" href="https://youtube.com" target="_blank" rel="noopener">YouTube</a>
+        <a class="social-card fade-up delay1" href="https://soundcloud.com" target="_blank" rel="noopener">SoundCloud</a>
+        <a class="social-card fade-up delay2" href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+        <a class="social-card fade-up delay3" href="https://t.me" target="_blank" rel="noopener">Telegram</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Message button with circular avatar -->
+  <button id="messageBtn" class="message-btn" aria-haspopup="dialog" aria-controls="chatPopup" aria-expanded="false" type="button">
+    <img src="mani-message-avatar.png" alt="Mani avatar" class="message-avatar" loading="lazy" width="40" height="40" />
+    <span class="message-label">Message me</span>
+  </button>
+
+  <!-- Chat popup (hidden by default) -->
+  <div id="chatPopup" class="chat-popup hidden" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+    <div class="chat-box" role="document">
+      <div class="chat-header">
+        <img src="logo.png" alt="Anfo" class="chat-logo" loading="lazy" width="28" height="28" />
+        <span id="chatTitle">Chat with Mani</span>
+        <button id="chatClose" class="chat-close" aria-label="Close chat">×</button>
+      </div>
+      <div class="chat-body" id="chatBody" tabindex="0">
+        <div class="chat-msg chat-msg--bot">Hey! Drop me a message.</div>
+      </div>
+      <div class="chat-input">
+        <input type="text" id="chatField" placeholder="Type your message..." aria-label="Type your message" />
+        <button id="chatSend" class="chat-send" type="button">Send</button>
+      </div>
+    </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
