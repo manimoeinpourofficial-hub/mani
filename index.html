@@ -1,207 +1,273 @@
 <!doctype html>
 <html lang="fa">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Anfo — Mani</title>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="preload" href="bg.webp" as="image">
-<link rel="preload" href="social-bg.webp" as="image">
-<meta name="color-scheme" content="dark">
-<style>
-:root{--accent:#00ffcc;--bg:#000;--card-bg:rgba(255,255,255,.06);--glass-border:rgba(255,255,255,.15);--glass-blur:10px;--cw:min(1400px,80%);--t:.18s}
-*{box-sizing:border-box}html,body{height:100%;margin:0;padding:0;background:var(--bg);color:#fff;font-family:'Poppins',sans-serif;-webkit-font-smoothing:antialiased}
-img{display:block;max-width:100%;height:auto}
-.container{width:var(--cw);margin:0 auto;padding:0 20px}
-.hidden{display:none!important}
-.header{position:sticky;top:0;z-index:120;display:flex;align-items:center;justify-content:center;padding:16px 0;background:transparent;transition:padding .25s ease,background .25s ease,box-shadow .25s ease}
-.header-logo{width:96px;max-width:20vw;min-width:60px;transition:transform .25s ease}
-.header--shrink{padding:8px 0;background:rgba(0,0,0,.85);box-shadow:0 2px 14px rgba(0,0,0,.6)}
-.header--shrink .header-logo{transform:scale(.9)}
-.panel{min-height:100vh;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:40px 0}
-.section-bg{position:absolute;inset:0;background-position:center;background-size:cover;background-repeat:no-repeat;z-index:-1;filter:contrast(.95) saturate(.95)}
-/* prefer webp then jpg fallback */
-#bg-hero{background-image:url('bg.webp'),url('bg.jpg')}
-#bg-social{background-image:url('social-bg.webp'),url('social-bg.jpg')}
-#anfo-hero,#social{background:none}
-.hero-content{display:flex;align-items:center;justify-content:center;gap:32px;padding:0 24px}
-.left-side,.right-side{display:flex}
-.left-side{justify-content:center;align-items:center}
-.mani-img{width:320px;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.6);animation:anfoFloat 5s ease-in-out infinite;transition:transform .25s ease}
-@keyframes anfoFloat{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
-.right-side{flex-direction:column;align-items:flex-start}
-.hero-text h1,.hero-text p{font-family:'Orbitron',sans-serif;font-size:2.4rem;margin:0 0 10px;opacity:0}
-.hero-icons{display:flex;gap:24px;margin-top:20px}
-.icon-box{display:flex;flex-direction:column;align-items:center;cursor:pointer;background:transparent;border:none;color:inherit;transition:transform .18s ease,filter .18s ease}
-.icon-box:hover{transform:translateY(-6px) scale(1.06);filter:drop-shadow(0 12px 30px rgba(0,255,204,.12))}
-.icon-img{width:72px}
-.arrow{width:40px;position:absolute;bottom:22px;left:50%;transform:translateX(-50%);opacity:.9;animation:arrowFloat 2.2s ease-in-out infinite}
-@keyframes arrowFloat{0%{transform:translate(-50%,0)}50%{transform:translate(-50%,10px)}100%{transform:translate(-50%,0)}}
-.section-title{font-family:'Orbitron',sans-serif;font-size:2.2rem;letter-spacing:.12em;margin:0 auto 24px;opacity:0;text-align:center}
-.portfolio-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;width:var(--cw);margin:0 auto}
-.work-card{background:var(--card-bg);border:1px solid var(--glass-border);border-radius:14px;padding:12px;text-align:center;color:inherit;backdrop-filter:blur(var(--glass-blur));transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;display:flex;flex-direction:column;justify-content:flex-start;opacity:0;transform:translateY(40px)}
-.work-card:hover{transform:translateY(-8px) scale(1.04);box-shadow:0 12px 40px rgba(0,255,204,.12);border-color:rgba(0,255,204,.6)}
-.work-img-wrap{width:100%;height:150px;border-radius:10px;overflow:hidden;margin-bottom:10px}
-.work-img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
-.work-card:hover .work-img{transform:scale(1.06)}
-.neon-btn{padding:12px 34px;border-radius:999px;border:1px solid rgba(0,255,204,.7);background:radial-gradient(circle at 0% 0%, rgba(0,255,204,.12), transparent);color:#fff;font-family:'Orbitron',sans-serif;font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;margin:26px auto 0;box-shadow:0 0 18px rgba(0,255,204,.18);display:block;transition:all .18s ease}
-#mygame{background:#111}
-.game-center{text-align:center;opacity:0;transform:translateY(40px)}
-.runner-wrap{position:relative;width:720px;max-width:92vw;height:210px;margin:0 auto 16px;background:#0f0f0f;border:2px solid var(--accent);border-radius:10px;overflow:hidden}
-.runner{position:absolute;left:40px;bottom:24px;width:64px;height:36px;background:url('logo.webp') center/contain no-repeat, url('logo.png') center/contain no-repeat;filter:drop-shadow(0 0 8px rgba(0,255,204,.5));transition:transform .18s ease}
-.obstacle{position:absolute;right:-40px;bottom:24px;width:32px;height:32px;background:#fff;border-radius:4px;animation:obstacleMove 1.5s linear infinite}
-@keyframes obstacleMove{from{right:-40px}to{right:calc(100% + 40px)}}
-.progress-wrap{width:720px;max-width:92vw;height:8px;border-radius:999px;margin:0 auto 10px;background:rgba(255,255,255,.15);overflow:hidden}
-.progress-bar{width:0;height:100%;background:linear-gradient(90deg,var(--accent),#00ffaa);box-shadow:inset 0 0 12px rgba(0,255,204,.5);transition:width .18s ease}
-.tracks-grid,.services-grid,.social-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;width:var(--cw);margin:0 auto}
-.track-card,.service-card,.social-card{background:var(--card-bg);border:1px solid var(--glass-border);border-radius:14px;padding:12px;text-align:center;color:inherit;backdrop-filter:blur(var(--glass-blur));transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;opacity:0;transform:translateY(40px)}
-.message-btn{position:fixed;bottom:20px;right:20px;display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;border:1px solid rgba(0,255,204,.7);background:rgba(0,0,0,.75);color:#fff;font-family:'Orbitron',sans-serif;font-size:.8rem;cursor:pointer;box-shadow:0 6px 30px rgba(0,255,204,.06);transition:transform .18s ease;z-index:130}
-.message-avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.06);transition:transform .18s ease}
-.message-btn:hover .message-avatar{transform:scale(1.06)}
-.chat-popup{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:140}
-.chat-box{width:min(560px,92vw);height:60vh;background:#0d0d0d;border:1px solid rgba(255,255,255,.15);border-radius:14px;box-shadow:0 10px 40px rgba(0,0,0,.6);display:grid;grid-template-rows:auto 1fr auto;overflow:hidden}
-.chat-header{display:flex;align-items:center;gap:12px;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.12)}
-.chat-close{margin-left:auto;background:transparent;border:none;color:#fff;font-size:20px;cursor:pointer;transition:transform .12s ease}
-.chat-close:hover{transform:rotate(90deg) scale(1.06)}
-.chat-body{padding:12px;overflow-y:auto}
-.chat-msg{max-width:80%;margin:6px 0;padding:8px 12px;border-radius:12px;font-size:.95rem}
-.chat-msg--bot{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}
-.chat-msg--user{margin-left:auto;background:rgba(0,255,204,.12);border:1px solid rgba(0,255,204,.35)}
-.chat-input{display:flex;gap:10px;padding:10px;border-top:1px solid rgba(255,255,255,.12)}
-#chatField{flex:1;background:rgba(255,255,255,.06);color:#fff;border:1px solid rgba(255,255,255,.15);border-radius:999px;padding:10px 14px;outline:none}
-.chat-send{padding:10px 16px;border-radius:999px;border:1px solid rgba(0,255,204,.7);background:rgba(0,0,0,.75);color:#fff;cursor:pointer;transition:transform .12s ease}
-@keyframes fadeIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}@keyframes slideLeft{from{opacity:0;transform:translateX(-60px)}to{opacity:1;transform:translateX(0)}}@keyframes slideRight{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:translateX(0)}}
-.fade-in,.fade-up,.text-left,.text-right,.icon-left,.icon-right,.section-title,.work-card,.track-card,.service-card,.social-card,.mani-img{opacity:0;transform:translateY(12px);will-change:opacity,transform}
-.visible.fade-in{animation:fadeIn .8s ease forwards}.visible.fade-up{animation:fadeInUp .8s ease forwards}.visible.text-left{animation:slideLeft .8s ease forwards}.visible.text-right{animation:slideRight .8s ease forwards}.visible.icon-left{animation:slideLeft .8s ease forwards}.visible.icon-right{animation:slideRight .8s ease forwards}
-.delay0{animation-delay:.1s}.delay1{animation-delay:.25s}.delay2{animation-delay:.4s}.delay3{animation-delay:.55s}
-a:hover,a:focus{color:var(--accent)}img:hover{transform:scale(1.02);transition:transform .25s ease}button:hover{transform:translateY(-2px)}
-@media (max-width:1100px){.portfolio-grid,.services-grid,.tracks-grid,.social-grid{grid-template-columns:repeat(3,1fr)}}@media (max-width:900px){.hero-content{flex-direction:column;gap:20px;text-align:center}.right-side{align-items:center}.mani-img{width:240px}.hero-text h1,.hero-text p{font-size:2rem}.icon-img{width:60px}.portfolio-grid,.services-grid,.tracks-grid,.social-grid{grid-template-columns:repeat(2,1fr);width:90%;max-width:520px;gap:18px}.runner-wrap{width:92vw;height:200px}.progress-wrap{width:92vw;height:7px}.runner{width:64px;height:36px}}@media (max-width:520px){.portfolio-grid,.services-grid,.tracks-grid,.social-grid{grid-template-columns:1fr;max-width:92vw;gap:16px}.section-title{font-size:1.6rem}.header-logo{width:72px}}
-/* reduce-motion */
-@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Anfo — Mani</title>
+
+  <!-- Preconnect and fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Preload hero images for faster LCP -->
+  <link rel="preload" href="bg.webp" as="image">
+  <link rel="preload" href="social-bg.webp" as="image">
+
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <meta name="color-scheme" content="dark">
 </head>
 <body>
-<header id="site-header" class="header" role="banner" aria-label="site header">
-  <img src="logo.webp" onerror="this.src='logo.png'" class="header-logo" alt="Anfo logo" loading="lazy" width="96" height="96">
-</header>
 
-<main id="scroll-wrapper" role="main">
-  <section id="anfo-hero" class="panel">
-    <div id="bg-hero" class="section-bg" aria-hidden="true"></div>
-    <div class="hero-content container">
-      <div class="left-side">
-        <img src="mani-portrait.webp" onerror="this.src='mani-portrait.png'" class="mani-img mani-img--lazy fade-in" alt="Mani portrait" loading="lazy" width="320" height="320">
-      </div>
-      <div class="right-side">
-        <div class="hero-text">
-          <h1 class="text-left fade-in">hi im mani</h1>
-          <p class="text-right fade-in delay1">I make your dreams</p>
+  <!-- Header -->
+  <header id="site-header" class="header" role="banner" aria-label="site header">
+    <img src="logo.webp" onerror="this.src='logo.png'" class="header-logo" alt="Anfo logo" loading="lazy" width="96" height="96">
+  </header>
+
+  <main id="scroll-wrapper" role="main">
+
+    <!-- HERO -->
+    <section id="anfo-hero" class="panel">
+      <div id="bg-hero" class="section-bg" aria-hidden="true"></div>
+
+      <div class="hero-content container">
+        <div class="left-side">
+          <img src="mani-portrait.webp" onerror="this.src='mani-portrait.png'" class="mani-img fade-in" alt="Mani portrait" loading="lazy" width="320" height="320">
         </div>
-        <div class="hero-icons">
-          <button class="icon-box icon-left" type="button" aria-label="program">
-            <img src="program.webp" onerror="this.src='program.png'" class="icon-img" alt="" loading="lazy" width="72" height="72"><span>program</span>
-          </button>
-          <button class="icon-box icon-right" type="button" aria-label="rap">
-            <img src="rap.webp" onerror="this.src='rap.png'" class="icon-img" alt="" loading="lazy" width="72" height="72"><span>rap</span>
-          </button>
+
+        <div class="right-side">
+          <div class="hero-text">
+            <h1 class="text-left fade-in">hi im mani</h1>
+            <p class="text-right fade-in delay1">I make your dreams</p>
+          </div>
+
+          <div class="hero-icons">
+            <button class="icon-box icon-left" type="button" aria-label="program">
+              <img src="program.webp" onerror="this.src='program.png'" class="icon-img" alt="" loading="lazy" width="72" height="72">
+              <span>program</span>
+            </button>
+
+            <button class="icon-box icon-right" type="button" aria-label="rap">
+              <img src="rap.webp" onerror="this.src='rap.png'" class="icon-img" alt="" loading="lazy" width="72" height="72">
+              <span>rap</span>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <img src="arrow.webp" onerror="this.src='arrow.png'" class="arrow" alt="scroll down" loading="lazy" width="40" height="40">
-  </section>
 
-  <section id="portfolio" class="panel">
-    <h2 class="section-title fade-in">Selected Works</h2>
-    <div class="portfolio-grid">
-      <a href="#" class="work-card fade-up delay0" rel="noopener">
-        <div class="work-img-wrap"><img src="work1.webp" onerror="this.src='work1.jpg'" class="work-img" alt="Project 1" loading="lazy"></div>
-        <h3>Project 01</h3><p>Cinematic educational platformer.</p>
-      </a>
-      <a href="#" class="work-card fade-up delay1" rel="noopener">
-        <div class="work-img-wrap"><img src="work2.webp" onerror="this.src='work2.jpg'" class="work-img" alt="Project 2" loading="lazy"></div>
-        <h3>Project 02</h3><p>Interactive landing page.</p>
-      </a>
-      <a href="#" class="work-card fade-up delay2" rel="noopener">
-        <div class="work-img-wrap"><img src="work3.webp" onerror="this.src='work3.jpg'" class="work-img" alt="Project 3" loading="lazy"></div>
-        <h3>Project 03</h3><p>Brand website with motion.</p>
-      </a>
-      <a href="#" class="work-card fade-up delay3" rel="noopener">
-        <div class="work-img-wrap"><img src="work4.webp" onerror="this.src='work4.jpg'" class="work-img" alt="Project 4" loading="lazy"></div>
-        <h3>Project 04</h3><p>Anfo universe prototype.</p>
-      </a>
-    </div>
-    <button class="view-more neon-btn" type="button" aria-label="View more projects">VIEW MORE</button>
-  </section>
+      <img src="arrow.webp" onerror="this.src='arrow.png'" class="arrow" alt="scroll down" loading="lazy" width="40" height="40">
+    </section>
 
-  <section id="mygame" class="panel">
-    <h2 class="section-title fade-in">My game</h2>
-    <div class="game-center fade-up delay1">
-      <div class="runner-wrap" aria-hidden="false">
-        <div id="runner" class="runner" aria-hidden="true"></div>
-        <div id="obstacle" class="obstacle" aria-hidden="true"></div>
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="panel">
+      <h2 class="section-title fade-in">Selected Works</h2>
+
+      <div class="portfolio-grid">
+        <a href="#" class="work-card fade-up delay0" rel="noopener">
+          <div class="work-img-wrap">
+            <img src="work1.webp" onerror="this.src='work1.jpg'" class="work-img" alt="Project 1" loading="lazy">
+          </div>
+          <h3>Project 01</h3>
+          <p>Cinematic educational platformer.</p>
+        </a>
+
+        <a href="#" class="work-card fade-up delay1" rel="noopener">
+          <div class="work-img-wrap">
+            <img src="work2.webp" onerror="this.src='work2.jpg'" class="work-img" alt="Project 2" loading="lazy">
+          </div>
+          <h3>Project 02</h3>
+          <p>Interactive landing page.</p>
+        </a>
+
+        <a href="#" class="work-card fade-up delay2" rel="noopener">
+          <div class="work-img-wrap">
+            <img src="work3.webp" onerror="this.src='work3.jpg'" class="work-img" alt="Project 3" loading="lazy">
+          </div>
+          <h3>Project 03</h3>
+          <p>Brand website with motion.</p>
+        </a>
+
+        <a href="#" class="work-card fade-up delay3" rel="noopener">
+          <div class="work-img-wrap">
+            <img src="work4.webp" onerror="this.src='work4.jpg'" class="work-img" alt="Project 4" loading="lazy">
+          </div>
+          <h3>Project 04</h3>
+          <p>Anfo universe prototype.</p>
+        </a>
       </div>
-      <div class="progress-wrap" aria-hidden="false"><div id="progressBar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div>
-      <div id="gameList" class="portfolio-grid hidden" aria-hidden="true">
-        <a href="#" class="work-card" rel="noopener"><div class="work-img-wrap"><img src="game1.webp" onerror="this.src='game1.jpg'" class="work-img" alt="Game 1" loading="lazy"></div><h3>Game 01</h3><p>Coming Soon</p></a>
-        <a href="#" class="work-card" rel="noopener"><div class="work-img-wrap"><img src="game2.webp" onerror="this.src='game2.jpg'" class="work-img" alt="Game 2" loading="lazy"></div><h3>Game 02</h3><p>Coming Soon</p></a>
-        <a href="#" class="work-card" rel="noopener"><div class="work-img-wrap"><img src="game3.webp" onerror="this.src='game3.jpg'" class="work-img" alt="Game 3" loading="lazy"></div><h3>Game 03</h3><p>Coming Soon</p></a>
-        <a href="#" class="work-card" rel="noopener"><div class="work-img-wrap"><img src="game4.webp" onerror="this.src='game4.jpg'" class="work-img" alt="Game 4" loading="lazy"></div><h3>Game 04</h3><p>Coming Soon</p></a>
+
+      <button class="view-more neon-btn" type="button" aria-label="View more projects">VIEW MORE</button>
+    </section>
+
+    <!-- MINI GAME -->
+    <section id="mygame" class="panel">
+      <h2 class="section-title fade-in">My game</h2>
+
+      <div class="game-center fade-up delay1">
+        <div class="runner-wrap" aria-hidden="false">
+          <div id="runner" class="runner" aria-hidden="true"></div>
+          <div id="obstacle" class="obstacle" aria-hidden="true"></div>
+        </div>
+
+        <div class="progress-wrap" aria-hidden="false">
+          <div id="progressBar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+        </div>
+
+        <div id="gameList" class="portfolio-grid hidden" aria-hidden="true">
+          <a href="#" class="work-card" rel="noopener">
+            <div class="work-img-wrap">
+              <img src="game1.webp" onerror="this.src='game1.jpg'" class="work-img" alt="Game 1" loading="lazy">
+            </div>
+            <h3>Game 01</h3>
+            <p>Coming Soon</p>
+          </a>
+
+          <a href="#" class="work-card" rel="noopener">
+            <div class="work-img-wrap">
+              <img src="game2.webp" onerror="this.src='game2.jpg'" class="work-img" alt="Game 2" loading="lazy">
+            </div>
+            <h3>Game 02</h3>
+            <p>Coming Soon</p>
+          </a>
+
+          <a href="#" class="work-card" rel="noopener">
+            <div class="work-img-wrap">
+              <img src="game3.webp" onerror="this.src='game3.jpg'" class="work-img" alt="Game 3" loading="lazy">
+            </div>
+            <h3>Game 03</h3>
+            <p>Coming Soon</p>
+          </a>
+
+          <a href="#" class="work-card" rel="noopener">
+            <div class="work-img-wrap">
+              <img src="game4.webp" onerror="this.src='game4.jpg'" class="work-img" alt="Game 4" loading="lazy">
+            </div>
+            <h3>Game 04</h3>
+            <p>Coming Soon</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRACKS -->
+    <section id="tracks" class="panel">
+      <h2 class="section-title fade-in">My tracks</h2>
+
+      <div class="tracks-grid">
+        <div class="track-card fade-up delay0">
+          <div class="track-cover">
+            <img src="track1.webp" onerror="this.src='track1.jpg'" alt="Track 1" loading="lazy">
+          </div>
+          <h3>Track 01</h3>
+          <audio controls preload="none" class="track-audio">
+            <source src="track1-demo.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <div class="track-card fade-up delay1">
+          <div class="track-cover">
+            <img src="track2.webp" onerror="this.src='track2.jpg'" alt="Track 2" loading="lazy">
+          </div>
+          <h3>Track 02</h3>
+          <audio controls preload="none" class="track-audio">
+            <source src="track2-demo.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <div class="track-card fade-up delay2">
+          <div class="track-cover">
+            <img src="track3.webp" onerror="this.src='track3.jpg'" alt="Track 3" loading="lazy">
+          </div>
+          <h3>Track 03</h3>
+          <audio controls preload="none" class="track-audio">
+            <source src="track3-demo.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <div class="track-card fade-up delay3">
+          <div class="track-cover">
+            <img src="track4.webp" onerror="this.src='track4.jpg'" alt="Track 4" loading="lazy">
+          </div>
+          <h3>Track 04</h3>
+          <audio controls preload="none" class="track-audio">
+            <source src="track4-demo.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="panel">
+      <h2 class="section-title fade-in">My services</h2>
+
+      <div class="services-grid">
+        <div class="service-card fade-up delay0">
+          <div class="service-icon">💻</div>
+          <h3>Interactive websites</h3>
+          <p>Cinematic UI/UX, motion backgrounds, and branded experiences.</p>
+        </div>
+
+        <div class="service-card fade-up delay1">
+          <div class="service-icon">🎮</div>
+          <h3>Game prototypes</h3>
+          <p>Playable demos with spatial effects and clean mechanics.</p>
+        </div>
+
+        <div class="service-card fade-up delay2">
+          <div class="service-icon">🎤</div>
+          <h3>Rap visuals</h3>
+          <p>Minimal, high-energy visuals that feel alive and intentional.</p>
+        </div>
+
+        <div class="service-card fade-up delay3">
+          <div class="service-icon">🛍️</div>
+          <h3>Brand sites</h3>
+          <p>Maintainable, responsive sites with localization and RTL.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOCIAL -->
+    <section id="social" class="panel">
+      <div id="bg-social" class="section-bg" aria-hidden="true"></div>
+
+      <h2 class="section-title fade-in">Follow me</h2>
+
+      <div class="social-grid">
+        <a class="social-card fade-up delay0" href="https://youtube.com" target="_blank" rel="noopener">YouTube</a>
+        <a class="social-card fade-up delay1" href="https://soundcloud.com" target="_blank" rel="noopener">SoundCloud</a>
+        <a class="social-card fade-up delay2" href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+        <a class="social-card fade-up delay3" href="https://t.me" target="_blank" rel="noopener">Telegram</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Message button -->
+  <button id="messageBtn" class="message-btn" aria-haspopup="dialog" aria-controls="chatPopup" aria-expanded="false" type="button">
+    <img src="mani-message-avatar.webp" onerror="this.src='mani-message-avatar.png'" class="message-avatar" alt="Mani avatar" loading="lazy" width="40" height="40">
+    <span class="message-label">Message me</span>
+  </button>
+
+  <!-- Chat popup -->
+  <div id="chatPopup" class="chat-popup hidden" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+    <div class="chat-box" role="document">
+      <div class="chat-header">
+        <img src="logo.webp" onerror="this.src='logo.png'" class="chat-logo" alt="Anfo" loading="lazy" width="28" height="28">
+        <span id="chatTitle">Chat with Mani</span>
+        <button id="chatClose" class="chat-close" aria-label="Close chat">×</button>
+      </div>
+      <div class="chat-body" id="chatBody" tabindex="0">
+        <div class="chat-msg chat-msg--bot">Hey! Drop me a message.</div>
+      </div>
+      <div class="chat-input">
+        <input type="text" id="chatField" placeholder="Type your message..." aria-label="Type your message">
+        <button id="chatSend" class="chat-send" type="button">Send</button>
       </div>
     </div>
-  </section>
-
-  <section id="tracks" class="panel">
-    <h2 class="section-title fade-in">My tracks</h2>
-    <div class="tracks-grid">
-      <div class="track-card fade-up delay0"><div class="track-cover"><img src="track1.webp" onerror="this.src='track1.jpg'" alt="Track 1" loading="lazy"></div><h3>Track 01</h3><audio controls preload="none" class="track-audio"><source src="track1-demo.mp3" type="audio/mpeg"></audio></div>
-      <div class="track-card fade-up delay1"><div class="track-cover"><img src="track2.webp" onerror="this.src='track2.jpg'" alt="Track 2" loading="lazy"></div><h3>Track 02</h3><audio controls preload="none" class="track-audio"><source src="track2-demo.mp3" type="audio/mpeg"></audio></div>
-      <div class="track-card fade-up delay2"><div class="track-cover"><img src="track3.webp" onerror="this.src='track3.jpg'" alt="Track 3" loading="lazy"></div><h3>Track 03</h3><audio controls preload="none" class="track-audio"><source src="track3-demo.mp3" type="audio/mpeg"></audio></div>
-      <div class="track-card fade-up delay3"><div class="track-cover"><img src="track4.webp" onerror="this.src='track4.jpg'" alt="Track 4" loading="lazy"></div><h3>Track 04</h3><audio controls preload="none" class="track-audio"><source src="track4-demo.mp3" type="audio/mpeg"></audio></div>
-    </div>
-  </section>
-
-  <section id="services" class="panel">
-    <h2 class="section-title fade-in">My services</h2>
-    <div class="services-grid">
-      <div class="service-card fade-up delay0"><div class="service-icon">💻</div><h3>Interactive websites</h3><p>Cinematic UI/UX, motion backgrounds, and branded experiences.</p></div>
-      <div class="service-card fade-up delay1"><div class="service-icon">🎮</div><h3>Game prototypes</h3><p>Playable demos with spatial effects and clean mechanics.</p></div>
-      <div class="service-card fade-up delay2"><div class="service-icon">🎤</div><h3>Rap visuals</h3><p>Minimal, high-energy visuals that feel alive and intentional.</p></div>
-      <div class="service-card fade-up delay3"><div class="service-icon">🛍️</div><h3>Brand sites</h3><p>Maintainable, responsive sites with localization and RTL.</p></div>
-    </div>
-  </section>
-
-  <section id="social" class="panel">
-    <div id="bg-social" class="section-bg" aria-hidden="true"></div>
-    <h2 class="section-title fade-in">Follow me</h2>
-    <div class="social-grid">
-      <a class="social-card fade-up delay0" href="https://youtube.com" target="_blank" rel="noopener">YouTube</a>
-      <a class="social-card fade-up delay1" href="https://soundcloud.com" target="_blank" rel="noopener">SoundCloud</a>
-      <a class="social-card fade-up delay2" href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
-      <a class="social-card fade-up delay3" href="https://t.me" target="_blank" rel="noopener">Telegram</a>
-    </div>
-  </section>
-</main>
-
-<button id="messageBtn" class="message-btn" aria-haspopup="dialog" aria-controls="chatPopup" aria-expanded="false" type="button">
-  <img src="mani-message-avatar.webp" onerror="this.src='mani-message-avatar.png'" class="message-avatar" alt="Mani avatar" loading="lazy" width="40" height="40"><span class="message-label">Message me</span>
-</button>
-
-<div id="chatPopup" class="chat-popup hidden" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
-  <div class="chat-box" role="document">
-    <div class="chat-header">
-      <img src="logo.webp" onerror="this.src='logo.png'" class="chat-logo" alt="Anfo" loading="lazy" width="28" height="28">
-      <span id="chatTitle">Chat with Mani</span>
-      <button id="chatClose" class="chat-close" aria-label="Close chat">×</button>
-    </div>
-    <div class="chat-body" id="chatBody" tabindex="0"><div class="chat-msg chat-msg--bot">Hey! Drop me a message.</div></div>
-    <div class="chat-input"><input type="text" id="chatField" placeholder="Type your message..." aria-label="Type your message"><button id="chatSend" class="chat-send" type="button">Send</button></div>
   </div>
-</div>
 
-<script>
-(()=>'use strict';const d=document,w=window;const $=s=>d.querySelector(s),$$=s=>Array.from(d.querySelectorAll(s));const header=$('#site-header'),messageBtn=$('#messageBtn'),chatPopup=$('#chatPopup'),chatClose=$('#chatClose'),chatSend=$('#chatSend'),chatField=$('#chatField'),chatBody=$('#chatBody');if(header)w.addEventListener('scroll',()=>header.classList.toggle('header--shrink',w.scrollY>20),{passive:true});w.addEventListener('keydown',e=>{if(e.code==='Space'&&!/input|textarea/i.test(document.activeElement.tagName)){e.preventDefault();}}, {passive:false});d.addEventListener('pointerdown',e=>{const c=e.target.closest&&e.target.closest('.work-card');if(c)c.style.transform='scale(.97)'});d.addEventListener('pointerup',e=>{const c=e.target.closest&&e.target.closest('.work-card');if(c)c.style.transform=''});(function(){const items=$$('.fade-in, .fade-up, .text-left, .text-right, .icon-left, .icon-right, .section-title, .work-card, .track-card, .service-card, .social-card, .mani-img');if(!items.length)return;const io=new IntersectionObserver((entries,obs)=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');obs.unobserve(entry.target);}})},{threshold:.18});items.forEach(i=>io.observe(i));})();(function(){const runner=$('#runner'),obstacle=$('#obstacle'),wrap=document.querySelector('.runner-wrap'),progressBar=$('#progressBar'),gameList=$('#gameList');if(!runner||!obstacle||!wrap||!progressBar)return;let jumping=false,score=0,unlocked=false;const JUMP_UP=-140;const updateProgress=()=>{const pct=Math.max(0,Math.min(100,score));progressBar.style.width=pct+'%';progressBar.setAttribute('aria-valuenow',String(pct));};const jump=()=>{if(jumping||unlocked)return;jumping=true;runner.style.transition='transform .26s cubic-bezier(.2,.9,.2,1)';runner.style.transform=`translateY(${JUMP_UP}px)`;setTimeout(()=>{runner.style.transition='transform .22s ease-in';runner.style.transform='translateY(0)';setTimeout(()=>{jumping=false},240);},260);};w.addEventListener('keydown',e=>{if(e.code==='Space')jump()},{passive:true});wrap.addEventListener('click',jump,{passive:true});wrap.addEventListener('touchstart',e=>{e.preventDefault();jump()},{passive:false});obstacle.addEventListener('animationiteration',()=>{if(unlocked)return;score=Math.min(100,score+10);updateProgress();if(score>=100){unlocked=true;gameList.classList.remove('hidden');gameList.setAttribute('aria-hidden','false');const cards=gameList.querySelectorAll('.work-card');cards.forEach((c,i)=>{c.style.opacity='0';c.style.transform='translateY(20px)';setTimeout(()=>{c.style.transition='opacity .4s ease, transform .4s ease';c.style.opacity='1';c.style.transform='translateY(0)';},120*i);});}});let rafId=null;const checkCollision=()=>{if(unlocked){if(rafId)cancelAnimationFrame(rafId);return;}const r=runner.getBoundingClientRect(),o=obstacle.getBoundingClientRect();const hit=!(r.right<o.left||r.left>o.right||r.bottom<o.top||r.top>o.bottom);if(hit){score=0;updateProgress();wrap.style.transition='filter .15s ease';wrap.style.filter='contrast(1.4)';runner.style.transition='transform .12s ease';runner.style.transform='translateY(-6px)';setTimeout(()=>{wrap.style.filter='contrast(1)';runner.style.transform='translateY(0)';},180);}rafId=requestAnimationFrame(checkCollision);};rafId=requestAnimationFrame(checkCollision);})();(function(){if(!messageBtn||!chatPopup)return;chatPopup.classList.add('hidden');messageBtn.setAttribute('aria-expanded','false');const openChat=()=>{chatPopup.classList.remove('hidden');chatPopup.classList.add('visible');messageBtn.setAttribute('aria-expanded','true');setTimeout(()=>chatField&&chatField.focus(),120)};const closeChat=()=>{chatPopup.classList.add('hidden');chatPopup.classList.remove('visible');messageBtn.setAttribute('aria-expanded','false');messageBtn.focus()};messageBtn.addEventListener('click',openChat,{passive:true});chatClose&&chatClose.addEventListener('click',closeChat,{passive:true});chatPopup.addEventListener('click',e=>{if(e.target===chatPopup)closeChat()},{passive:true});w.addEventListener('keydown',e=>{if(e.key==='Escape'&&!chatPopup.classList.contains('hidden'))closeChat()},{passive:true});const appendUser=t=>{const d=document.createElement('div');d.className='chat-msg chat-msg--user';d.textContent=t;chatBody.appendChild(d);chatBody.scrollTop=chatBody.scrollHeight};const appendBot=t=>{const d=document.createElement('div');d.className='chat-msg chat-msg--bot';d.textContent=t;chatBody.appendChild(d);chatBody.scrollTop=chatBody.scrollHeight};if(chatSend&&chatField){chatSend.addEventListener('click',()=>{const text=chatField.value.trim();if(!text)return;appendUser(text);chatField.value='';setTimeout(()=>appendBot(\"Got it — I'll get back to you soon.\"),450)},{passive:true});chatField.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();chatSend.click()}})} })();if(w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('reduce-motion');
-})();
-</script>
+  <script src="script.js" defer></script>
 </body>
 </html>
