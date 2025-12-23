@@ -1,58 +1,55 @@
-/* script.js — final tuned version
-   - hero & social sections have no color overlay (handled in CSS)
-   - hover effects applied globally in CSS
-   - runner smaller and jump stronger (tunable JUMP_UP)
-   - chat no longer auto-opens; close works; overlay & Escape close
-   - entrance animations via IntersectionObserver
+/* script.js
+   - defer in HTML ensures DOM ready
+   - IntersectionObserver for entrance animations
+   - requestAnimationFrame for collision checks
+   - chat open/close fixed, Escape and backdrop close
+   - spacebar prevented unless typing
 */
 
 (() => {
   'use strict';
 
-  const doc = document;
-  const win = window;
+  const d = document;
+  const w = window;
 
-  /* Cached selectors */
-  const header = doc.getElementById('site-header');
-  const messageBtn = doc.getElementById('messageBtn');
-  const chatPopup = doc.getElementById('chatPopup');
-  const chatClose = doc.getElementById('chatClose');
-  const chatSend = doc.getElementById('chatSend');
-  const chatField = doc.getElementById('chatField');
-  const chatBody = doc.getElementById('chatBody');
+  const $ = s => d.querySelector(s);
+  const $$ = s => Array.from(d.querySelectorAll(s));
 
-  /* Helpers */
-  const addClass = (el, c) => el && el.classList.add(c);
-  const removeClass = (el, c) => el && el.classList.remove(c);
-  const setAttr = (el, k, v) => el && el.setAttribute(k, v);
+  const header = $('#site-header');
+  const messageBtn = $('#messageBtn');
+  const chatPopup = $('#chatPopup');
+  const chatClose = $('#chatClose');
+  const chatSend = $('#chatSend');
+  const chatField = $('#chatField');
+  const chatBody = $('#chatBody');
 
-  /* Sticky header */
+  // Sticky header
   if (header) {
-    win.addEventListener('scroll', () => {
-      header.classList.toggle('header--shrink', win.scrollY > 20);
+    w.addEventListener('scroll', () => {
+      header.classList.toggle('header--shrink', w.scrollY > 20);
     }, { passive: true });
   }
 
-  /* Prevent spacebar scroll unless typing */
-  win.addEventListener('keydown', (e) => {
+  // Prevent spacebar scrolling unless typing
+  w.addEventListener('keydown', (e) => {
     if (e.code === 'Space' && !/input|textarea/i.test(document.activeElement.tagName)) {
       e.preventDefault();
     }
   }, { passive: false });
 
-  /* Event delegation for card press feedback */
-  doc.addEventListener('pointerdown', (e) => {
+  // Press feedback for cards (delegation)
+  d.addEventListener('pointerdown', (e) => {
     const c = e.target.closest && e.target.closest('.work-card');
     if (c) c.style.transform = 'scale(0.97)';
   });
-  doc.addEventListener('pointerup', (e) => {
+  d.addEventListener('pointerup', (e) => {
     const c = e.target.closest && e.target.closest('.work-card');
     if (c) c.style.transform = '';
   });
 
-  /* IntersectionObserver for entrance animations */
+  // Entrance animations
   (function entranceObserver() {
-    const items = doc.querySelectorAll('.fade-in, .fade-up, .text-left, .text-right, .icon-left, .icon-right, .section-title, .work-card, .track-card, .service-card, .social-card, .mani-img');
+    const items = $$('.fade-in, .fade-up, .text-left, .text-right, .icon-left, .icon-right, .section-title, .work-card, .track-card, .service-card, .social-card, .mani-img');
     if (!items.length) return;
     const io = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
@@ -65,13 +62,13 @@
     items.forEach(i => io.observe(i));
   })();
 
-  /* Runner game: smaller runner, stronger jump (tunable) */
+  // Runner game
   (function runnerGame() {
-    const runner = doc.getElementById('runner');
-    const obstacle = doc.getElementById('obstacle');
-    const wrap = doc.querySelector('.runner-wrap');
-    const progressBar = doc.getElementById('progressBar');
-    const gameList = doc.getElementById('gameList');
+    const runner = $('#runner');
+    const obstacle = $('#obstacle');
+    const wrap = document.querySelector('.runner-wrap');
+    const progressBar = $('#progressBar');
+    const gameList = $('#gameList');
 
     if (!runner || !obstacle || !wrap || !progressBar) return;
 
@@ -79,8 +76,7 @@
     let score = 0;
     let unlocked = false;
 
-    // tuning: stronger jump
-    const JUMP_UP = -140;
+    const JUMP_UP = -140; // stronger jump
 
     const updateProgress = () => {
       const pct = Math.max(0, Math.min(100, score));
@@ -101,11 +97,11 @@
     };
 
     // Controls
-    win.addEventListener('keydown', (e) => { if (e.code === 'Space') jump(); }, { passive: true });
+    w.addEventListener('keydown', (e) => { if (e.code === 'Space') jump(); }, { passive: true });
     wrap.addEventListener('click', jump, { passive: true });
     wrap.addEventListener('touchstart', (e) => { e.preventDefault(); jump(); }, { passive: false });
 
-    // Score increase on obstacle cycle
+    // Score on obstacle cycle
     obstacle.addEventListener('animationiteration', () => {
       if (unlocked) return;
       score = Math.min(100, score + 10);
@@ -127,7 +123,7 @@
       }
     });
 
-    // Collision detection via RAF
+    // Collision detection
     let rafId = null;
     const checkCollision = () => {
       if (unlocked) {
@@ -154,26 +150,25 @@
     rafId = requestAnimationFrame(checkCollision);
   })();
 
-  /* Chat popup logic (fixed auto-open & close) */
+  // Chat logic
   (function chatLogic() {
     if (!messageBtn || !chatPopup) return;
 
     // ensure hidden on load
-    removeClass(chatPopup, 'visible');
-    addClass(chatPopup, 'hidden');
-    setAttr(messageBtn, 'aria-expanded', 'false');
+    chatPopup.classList.add('hidden');
+    messageBtn.setAttribute('aria-expanded', 'false');
 
     const openChat = () => {
-      removeClass(chatPopup, 'hidden');
-      addClass(chatPopup, 'visible');
-      setAttr(messageBtn, 'aria-expanded', 'true');
+      chatPopup.classList.remove('hidden');
+      chatPopup.classList.add('visible');
+      messageBtn.setAttribute('aria-expanded', 'true');
       setTimeout(() => chatField && chatField.focus(), 120);
     };
 
     const closeChat = () => {
-      addClass(chatPopup, 'hidden');
-      removeClass(chatPopup, 'visible');
-      setAttr(messageBtn, 'aria-expanded', 'false');
+      chatPopup.classList.add('hidden');
+      chatPopup.classList.remove('visible');
+      messageBtn.setAttribute('aria-expanded', 'false');
       messageBtn.focus();
     };
 
@@ -186,20 +181,20 @@
     }, { passive: true });
 
     // Escape to close
-    win.addEventListener('keydown', (e) => {
+    w.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && !chatPopup.classList.contains('hidden')) closeChat();
     }, { passive: true });
 
     // send message
     const appendUser = (text) => {
-      const d = doc.createElement('div');
+      const d = document.createElement('div');
       d.className = 'chat-msg chat-msg--user';
       d.textContent = text;
       chatBody.appendChild(d);
       chatBody.scrollTop = chatBody.scrollHeight;
     };
     const appendBot = (text) => {
-      const d = doc.createElement('div');
+      const d = document.createElement('div');
       d.className = 'chat-msg chat-msg--bot';
       d.textContent = text;
       chatBody.appendChild(d);
@@ -224,9 +219,9 @@
     }
   })();
 
-  /* prefers-reduced-motion */
-  if (win.matchMedia && win.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    doc.documentElement.classList.add('reduce-motion');
+  // Respect reduced motion
+  if (w.matchMedia && w.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('reduce-motion');
   }
 
 })();
