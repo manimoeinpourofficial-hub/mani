@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Anfo — Mani</title>
 
-  <!-- Preconnect and fonts -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
-  <!-- Preload hero images for faster LCP -->
-  <link rel="preload" href="bg.webp" as="image">
-  <link rel="preload" href="social-bg.webp" as="image">
+  <!-- Preload hero background for faster LCP -->
+  <link rel="preload" href="images/bg-hero-1200.webp" as="image">
 
   <!-- Main stylesheet -->
   <link rel="stylesheet" href="style.css">
@@ -22,41 +21,53 @@
 
   <!-- Header -->
   <header id="site-header" class="header" role="banner" aria-label="site header">
-    <img src="logo.webp" onerror="this.src='logo.png'" class="header-logo" alt="Anfo logo" loading="lazy" width="96" height="96">
+    <img id="headerLogo" src="images/logo-96.webp" onerror="this.src='images/logo-96.png'" class="header-logo" alt="Anfo logo" loading="lazy" decoding="async" width="96" height="96">
   </header>
 
   <main id="scroll-wrapper" role="main">
 
-    <!-- HERO -->
+    <!-- HERO (pure image background, no overlay) -->
     <section id="anfo-hero" class="panel">
       <div id="bg-hero" class="section-bg" aria-hidden="true"></div>
 
       <div class="hero-content container">
-        <div class="left-side">
-          <img src="mani-portrait.webp" onerror="this.src='mani-portrait.png'" class="mani-img fade-in" alt="Mani portrait" loading="lazy" width="320" height="320">
-        </div>
-
-        <div class="right-side">
-          <div class="hero-text">
-            <h1 class="text-left fade-in">hi im mani</h1>
-            <p class="text-right fade-in delay1">I make your dreams</p>
+        <div class="hero-inner">
+          <div class="left-side">
+            <!-- responsive portrait: srcset limits download to needed size -->
+            <img
+              src="images/mani-320.webp"
+              onerror="this.src='images/mani-320.png'"
+              srcset="images/mani-320.webp 320w, images/mani-640.webp 640w, images/mani-1200.webp 1200w"
+              sizes="(max-width:900px) 240px, 320px"
+              class="mani-img fade-in"
+              alt="Mani portrait"
+              loading="lazy"
+              decoding="async"
+              width="320" height="320">
           </div>
 
-          <div class="hero-icons">
-            <button class="icon-box icon-left" type="button" aria-label="program">
-              <img src="program.webp" onerror="this.src='program.png'" class="icon-img" alt="" loading="lazy" width="72" height="72">
-              <span>program</span>
-            </button>
+          <div class="right-side">
+            <div class="hero-text">
+              <h1 class="text-left fade-in">hi im mani</h1>
+              <p class="text-right fade-in delay1">I make your dreams</p>
+            </div>
 
-            <button class="icon-box icon-right" type="button" aria-label="rap">
-              <img src="rap.webp" onerror="this.src='rap.png'" class="icon-img" alt="" loading="lazy" width="72" height="72">
-              <span>rap</span>
-            </button>
+            <div class="hero-icons">
+              <button class="icon-box icon-left" type="button" aria-label="program">
+                <img src="images/program-72.webp" onerror="this.src='images/program-72.png'" class="icon-img" alt="" loading="lazy" decoding="async" width="72" height="72">
+                <span>program</span>
+              </button>
+
+              <button class="icon-box icon-right" type="button" aria-label="rap">
+                <img src="images/rap-72.webp" onerror="this.src='images/rap-72.png'" class="icon-img" alt="" loading="lazy" decoding="async" width="72" height="72">
+                <span>rap</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      <img src="arrow.webp" onerror="this.src='arrow.png'" class="arrow" alt="scroll down" loading="lazy" width="40" height="40">
+      <img src="images/arrow-40.webp" onerror="this.src='images/arrow-40.png'" class="arrow" alt="scroll down" loading="lazy" decoding="async" width="40" height="40">
     </section>
 
     <!-- PORTFOLIO -->
@@ -66,7 +77,10 @@
       <div class="portfolio-grid">
         <a href="#" class="work-card fade-up delay0" rel="noopener">
           <div class="work-img-wrap">
-            <img src="work1.webp" onerror="this.src='work1.jpg'" class="work-img" alt="Project 1" loading="lazy">
+            <img src="images/work1-320.webp" onerror="this.src='images/work1-320.jpg'"
+                 srcset="images/work1-320.webp 320w, images/work1-640.webp 640w, images/work1-1200.webp 1200w"
+                 sizes="(max-width:900px) 100vw, 300px"
+                 class="work-img" alt="Project 1" loading="lazy" decoding="async">
           </div>
           <h3>Project 01</h3>
           <p>Cinematic educational platformer.</p>
@@ -74,7 +88,10 @@
 
         <a href="#" class="work-card fade-up delay1" rel="noopener">
           <div class="work-img-wrap">
-            <img src="work2.webp" onerror="this.src='work2.jpg'" class="work-img" alt="Project 2" loading="lazy">
+            <img src="images/work2-320.webp" onerror="this.src='images/work2-320.jpg'"
+                 srcset="images/work2-320.webp 320w, images/work2-640.webp 640w, images/work2-1200.webp 1200w"
+                 sizes="(max-width:900px) 100vw, 300px"
+                 class="work-img" alt="Project 2" loading="lazy" decoding="async">
           </div>
           <h3>Project 02</h3>
           <p>Interactive landing page.</p>
@@ -82,7 +99,10 @@
 
         <a href="#" class="work-card fade-up delay2" rel="noopener">
           <div class="work-img-wrap">
-            <img src="work3.webp" onerror="this.src='work3.jpg'" class="work-img" alt="Project 3" loading="lazy">
+            <img src="images/work3-320.webp" onerror="this.src='images/work3-320.jpg'"
+                 srcset="images/work3-320.webp 320w, images/work3-640.webp 640w, images/work3-1200.webp 1200w"
+                 sizes="(max-width:900px) 100vw, 300px"
+                 class="work-img" alt="Project 3" loading="lazy" decoding="async">
           </div>
           <h3>Project 03</h3>
           <p>Brand website with motion.</p>
@@ -90,7 +110,10 @@
 
         <a href="#" class="work-card fade-up delay3" rel="noopener">
           <div class="work-img-wrap">
-            <img src="work4.webp" onerror="this.src='work4.jpg'" class="work-img" alt="Project 4" loading="lazy">
+            <img src="images/work4-320.webp" onerror="this.src='images/work4-320.jpg'"
+                 srcset="images/work4-320.webp 320w, images/work4-640.webp 640w, images/work4-1200.webp 1200w"
+                 sizes="(max-width:900px) 100vw, 300px"
+                 class="work-img" alt="Project 4" loading="lazy" decoding="async">
           </div>
           <h3>Project 04</h3>
           <p>Anfo universe prototype.</p>
@@ -106,7 +129,7 @@
 
       <div class="game-center fade-up delay1">
         <div class="runner-wrap" aria-hidden="false">
-          <div id="runner" class="runner" aria-hidden="true"></div>
+          <div id="runner" class="runner" aria-hidden="true" role="img" aria-label="game runner"></div>
           <div id="obstacle" class="obstacle" aria-hidden="true"></div>
         </div>
 
@@ -117,31 +140,28 @@
         <div id="gameList" class="portfolio-grid hidden" aria-hidden="true">
           <a href="#" class="work-card" rel="noopener">
             <div class="work-img-wrap">
-              <img src="game1.webp" onerror="this.src='game1.jpg'" class="work-img" alt="Game 1" loading="lazy">
+              <img src="images/game1-320.webp" onerror="this.src='images/game1-320.jpg'" class="work-img" alt="Game 1" loading="lazy" decoding="async">
             </div>
             <h3>Game 01</h3>
             <p>Coming Soon</p>
           </a>
-
           <a href="#" class="work-card" rel="noopener">
             <div class="work-img-wrap">
-              <img src="game2.webp" onerror="this.src='game2.jpg'" class="work-img" alt="Game 2" loading="lazy">
+              <img src="images/game2-320.webp" onerror="this.src='images/game2-320.jpg'" class="work-img" alt="Game 2" loading="lazy" decoding="async">
             </div>
             <h3>Game 02</h3>
             <p>Coming Soon</p>
           </a>
-
           <a href="#" class="work-card" rel="noopener">
             <div class="work-img-wrap">
-              <img src="game3.webp" onerror="this.src='game3.jpg'" class="work-img" alt="Game 3" loading="lazy">
+              <img src="images/game3-320.webp" onerror="this.src='images/game3-320.jpg'" class="work-img" alt="Game 3" loading="lazy" decoding="async">
             </div>
             <h3>Game 03</h3>
             <p>Coming Soon</p>
           </a>
-
           <a href="#" class="work-card" rel="noopener">
             <div class="work-img-wrap">
-              <img src="game4.webp" onerror="this.src='game4.jpg'" class="work-img" alt="Game 4" loading="lazy">
+              <img src="images/game4-320.webp" onerror="this.src='images/game4-320.jpg'" class="work-img" alt="Game 4" loading="lazy" decoding="async">
             </div>
             <h3>Game 04</h3>
             <p>Coming Soon</p>
@@ -157,41 +177,41 @@
       <div class="tracks-grid">
         <div class="track-card fade-up delay0">
           <div class="track-cover">
-            <img src="track1.webp" onerror="this.src='track1.jpg'" alt="Track 1" loading="lazy">
+            <img src="images/track1-320.webp" onerror="this.src='images/track1-320.jpg'" alt="Track 1" loading="lazy" decoding="async">
           </div>
           <h3>Track 01</h3>
           <audio controls preload="none" class="track-audio">
-            <source src="track1-demo.mp3" type="audio/mpeg">
+            <source src="audio/track1-demo.mp3" type="audio/mpeg">
           </audio>
         </div>
 
         <div class="track-card fade-up delay1">
           <div class="track-cover">
-            <img src="track2.webp" onerror="this.src='track2.jpg'" alt="Track 2" loading="lazy">
+            <img src="images/track2-320.webp" onerror="this.src='images/track2-320.jpg'" alt="Track 2" loading="lazy" decoding="async">
           </div>
           <h3>Track 02</h3>
           <audio controls preload="none" class="track-audio">
-            <source src="track2-demo.mp3" type="audio/mpeg">
+            <source src="audio/track2-demo.mp3" type="audio/mpeg">
           </audio>
         </div>
 
         <div class="track-card fade-up delay2">
           <div class="track-cover">
-            <img src="track3.webp" onerror="this.src='track3.jpg'" alt="Track 3" loading="lazy">
+            <img src="images/track3-320.webp" onerror="this.src='images/track3-320.jpg'" alt="Track 3" loading="lazy" decoding="async">
           </div>
           <h3>Track 03</h3>
           <audio controls preload="none" class="track-audio">
-            <source src="track3-demo.mp3" type="audio/mpeg">
+            <source src="audio/track3-demo.mp3" type="audio/mpeg">
           </audio>
         </div>
 
         <div class="track-card fade-up delay3">
           <div class="track-cover">
-            <img src="track4.webp" onerror="this.src='track4.jpg'" alt="Track 4" loading="lazy">
+            <img src="images/track4-320.webp" onerror="this.src='images/track4-320.jpg'" alt="Track 4" loading="lazy" decoding="async">
           </div>
           <h3>Track 04</h3>
           <audio controls preload="none" class="track-audio">
-            <source src="track4-demo.mp3" type="audio/mpeg">
+            <source src="audio/track4-demo.mp3" type="audio/mpeg">
           </audio>
         </div>
       </div>
@@ -228,7 +248,7 @@
       </div>
     </section>
 
-    <!-- SOCIAL -->
+    <!-- SOCIAL (same background as hero) -->
     <section id="social" class="panel">
       <div id="bg-social" class="section-bg" aria-hidden="true"></div>
 
@@ -246,7 +266,7 @@
 
   <!-- Message button -->
   <button id="messageBtn" class="message-btn" aria-haspopup="dialog" aria-controls="chatPopup" aria-expanded="false" type="button">
-    <img src="mani-message-avatar.webp" onerror="this.src='mani-message-avatar.png'" class="message-avatar" alt="Mani avatar" loading="lazy" width="40" height="40">
+    <img src="images/mani-avatar-40.webp" onerror="this.src='images/mani-avatar-40.png'" class="message-avatar" alt="Mani avatar" loading="lazy" decoding="async" width="40" height="40">
     <span class="message-label">Message me</span>
   </button>
 
@@ -254,7 +274,7 @@
   <div id="chatPopup" class="chat-popup hidden" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
     <div class="chat-box" role="document">
       <div class="chat-header">
-        <img src="logo.webp" onerror="this.src='logo.png'" class="chat-logo" alt="Anfo" loading="lazy" width="28" height="28">
+        <img src="images/logo-48.webp" onerror="this.src='images/logo-48.png'" class="chat-logo" alt="Anfo" loading="lazy" decoding="async" width="28" height="28">
         <span id="chatTitle">Chat with Mani</span>
         <button id="chatClose" class="chat-close" aria-label="Close chat">×</button>
       </div>
