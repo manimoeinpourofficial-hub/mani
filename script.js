@@ -1,21 +1,13 @@
-/* script.js
-   - defer in HTML ensures DOM ready
-   - IntersectionObserver for entrance animations
-   - requestAnimationFrame for collision checks
-   - chat open/close fixed, Escape and backdrop close
-   - spacebar prevented unless typing
-*/
-
 (() => {
   'use strict';
 
   const d = document;
   const w = window;
-
   const $ = s => d.querySelector(s);
   const $$ = s => Array.from(d.querySelectorAll(s));
 
   const header = $('#site-header');
+  const headerLogo = $('#headerLogo');
   const messageBtn = $('#messageBtn');
   const chatPopup = $('#chatPopup');
   const chatClose = $('#chatClose');
@@ -37,17 +29,7 @@
     }
   }, { passive: false });
 
-  // Press feedback for cards (delegation)
-  d.addEventListener('pointerdown', (e) => {
-    const c = e.target.closest && e.target.closest('.work-card');
-    if (c) c.style.transform = 'scale(0.97)';
-  });
-  d.addEventListener('pointerup', (e) => {
-    const c = e.target.closest && e.target.closest('.work-card');
-    if (c) c.style.transform = '';
-  });
-
-  // Entrance animations
+  // Entrance animations (IntersectionObserver)
   (function entranceObserver() {
     const items = $$('.fade-in, .fade-up, .text-left, .text-right, .icon-left, .icon-right, .section-title, .work-card, .track-card, .service-card, .social-card, .mani-img');
     if (!items.length) return;
@@ -60,6 +42,17 @@
       });
     }, { threshold: 0.18 });
     items.forEach(i => io.observe(i));
+  })();
+
+  // Set runner logo from header logo (ensures same asset used)
+  (function syncRunnerLogo() {
+    const runner = $('#runner');
+    if (!runner || !headerLogo) return;
+    // prefer webp if headerLogo has it; use computed src
+    const logoSrc = headerLogo.currentSrc || headerLogo.src || headerLogo.getAttribute('src');
+    if (logoSrc) {
+      runner.style.backgroundImage = `url('${logoSrc}')`;
+    }
   })();
 
   // Runner game
@@ -76,7 +69,7 @@
     let score = 0;
     let unlocked = false;
 
-    const JUMP_UP = -140; // stronger jump
+    const JUMP_UP = -140; // tuneable
 
     const updateProgress = () => {
       const pct = Math.max(0, Math.min(100, score));
@@ -123,7 +116,7 @@
       }
     });
 
-    // Collision detection
+    // Collision detection via RAF
     let rafId = null;
     const checkCollision = () => {
       if (unlocked) {
@@ -154,7 +147,6 @@
   (function chatLogic() {
     if (!messageBtn || !chatPopup) return;
 
-    // ensure hidden on load
     chatPopup.classList.add('hidden');
     messageBtn.setAttribute('aria-expanded', 'false');
 
@@ -175,17 +167,14 @@
     messageBtn.addEventListener('click', openChat, { passive: true });
     chatClose && chatClose.addEventListener('click', closeChat, { passive: true });
 
-    // click outside to close
     chatPopup.addEventListener('click', (e) => {
       if (e.target === chatPopup) closeChat();
     }, { passive: true });
 
-    // Escape to close
     w.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && !chatPopup.classList.contains('hidden')) closeChat();
     }, { passive: true });
 
-    // send message
     const appendUser = (text) => {
       const d = document.createElement('div');
       d.className = 'chat-msg chat-msg--user';
